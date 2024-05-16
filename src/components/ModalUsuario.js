@@ -1,15 +1,15 @@
 import React from 'react';
-import './Layout.css'; // Ensure this CSS file is correctly imported
+import './Layout.css'; // Ensure this path is correct
 
 const ModalUsuario = ({ isOpen, onClose, user }) => {
     if (!isOpen) return null;
 
     return (
         <div className="modal-overlay">
-            <div className="modal" style={{backgroundColor:"#fdbe0f"}}>
+            <div className="modal">
                 <header className="header">
                     <nav className="navbar">
-                        <a href="#" onClick={onClose}>
+                        <a href="/" onClick={onClose}>
                             <img src="/img/flecha.svg" alt="volver" />
                             Volver
                         </a>
@@ -38,7 +38,7 @@ const ModalUsuario = ({ isOpen, onClose, user }) => {
                         </div>
                     </div>
                     <div className="contenedor-abajo">
-                        <a className="nuevovuelo" href="#">Nuevo vuelo</a>
+                        <a className="nuevovuelo" href="/">Nuevo vuelo</a>
                     </div>
                 </div>
             </div>

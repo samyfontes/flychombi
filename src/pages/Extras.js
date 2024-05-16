@@ -3,7 +3,7 @@ import '../App.css';
 
 const Extras = () => {
     return (
-        <div className="extras-container">
+        <div className="extras-container" style={{backgroundColor:"#faebd7"}}>
             <div className="divBody">
                 <main>
                     <div className="divEquipajes">
@@ -51,7 +51,7 @@ const Extras = () => {
                     </div>
                 </main>
 
-                <section className="seccionEquipaje">
+                <section className="seccionEquipaje" >
                     <div>
                         <h4>RESUMEN DE VUELO</h4>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos fuga quod facere esse quibusdam rem placeat alias dolorem saepe pariatur soluta dolores numquam asperiores voluptatem provident, consequatur expedita modi eius!</p>

@@ -55,19 +55,12 @@ header {
   padding-top: 5px;
 }
 
-/* Login Section */
-.login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
 
 .sectionRegistro {
   background-position: center;
   align-items: center;
   text-align: center;
-  height: 80vh;
+  /* height: 80vh; */
   width: 100%;
   background-color: #ffa800;
   display: flex;
@@ -78,7 +71,7 @@ header {
 
 .divFormulario {
   width: 25%;
-  height: 50%;
+  height: 75%;
   text-align: center;
   border-radius: 15%;
   border: 1px solid black;
@@ -136,7 +129,22 @@ header {
   background-color: #d78f00;
 }
 
-/* Login Form */
+/* Login Section */
+.login {
+  width: 100vw; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 0; 
+  padding: 20px;
+  box-sizing: border-box; 
+  height: 100vh; 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
 .login form {
   display: flex;
   flex-direction: column;
@@ -208,7 +216,7 @@ footer {
 main {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   flex-grow: 2;
 }
 
@@ -331,12 +339,12 @@ main {
     margin-top: 20px;
   }
 
-  .divFormulario {
-    width: 80%;
-  }
-
   .divBody {
     flex-direction: column;
+  }
+
+  .divFormulario{
+    width: 55%;
   }
 
   main {
@@ -377,12 +385,15 @@ main {
   .divBody {
     margin-left: 0;
   }
+  
+  .divFormulario{
+    width: 60%;
+  }
 
   .divEquipajes {
     width: auto;
   }
 }
-
 
 
 

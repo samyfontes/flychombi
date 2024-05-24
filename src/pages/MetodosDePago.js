@@ -3,7 +3,6 @@ import React from "react";
 const MetodosDePago = () =>{
 
     return(
-        <div>
             <section class= " columnas ">
                 <div class="TextoIzquierdo">
                     <p class="Subtitulo" >
@@ -14,21 +13,22 @@ const MetodosDePago = () =>{
                     <form class="DatosDelUsuario" action="" method="post">
                         <div class="datos1">
                             <label for=" NumeroDeTarjeta "></label>
-                            <input type="number" class="input-formas-de-pago" id="Tarjeta" name="NumeroDeTarjeta" placeholder=" Numero de tarjeta " maxlength="16" required>
+                            <input type="number" class="input-formas-de-pago" id="Tarjeta" name="NumeroDeTarjeta" placeholder=" Numero de tarjeta " maxlength="16" required></input>
                             <label for="nombre"></label>
-                            <input type=" text " class="input-formas-de-pago" id=" nombre " name=" nombre " placeholder=" Nombre del titular "  required> 
+                            <input type=" text " class="input-formas-de-pago" id=" nombre " name=" nombre " placeholder=" Nombre del titular "  required></input> 
                         </div>
                         <div class="datos1">
                             <label for="documento" class="label-formas-de-pago"></label>
-                            <input type="number" class="input-formas-de-pago" id="documento" name="documento" placeholder="Ingresa el documento " required>
+                            <input type="number" class="input-formas-de-pago" id="documento" name="documento" placeholder="Ingresa el documento " required></input>
                             <label for=" FechaDeCaducidad "> </label>
-                            <input type="date" class="input-formas-de-pago" id="FechaDeCaducidad" name="FechaDeCaducidad" placeholder="Fecha de caducidad"  required>
+                            <input type="date" class="input-formas-de-pago" id="FechaDeCaducidad" name="FechaDeCaducidad" placeholder="Fecha de caducidad"  required></input>
                         </div>
                         <div class="datos1">
                             <label for="Codigo"></label>
-                            <input type="number" class="input-formas-de-pago" id="codigo" name="codigo" placeholder="Ingresa el codigo" maxlength="3" required>
+                            <input type="number" class="input-formas-de-pago" id="codigo" name="codigo" placeholder="Ingresa el codigo" maxlength="3" required></input>
                         </div>
                     </form>
+                    
                     <div class="MP">
                         <p class="TextoMP">
                             <b>
@@ -47,6 +47,7 @@ const MetodosDePago = () =>{
                         </button>
                     </div>
                 </div>
+                
                 <div class=" TextoDerecha ">
                     <ul class="contenido"> 
                         <li > Fecha: </li>
@@ -57,7 +58,6 @@ const MetodosDePago = () =>{
                     </ul>
                 </div>
             </section>
-        </div>
     );
 
 }

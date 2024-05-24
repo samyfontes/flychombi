@@ -3,7 +3,7 @@ import '../App.css';
 
 const InformacionPasajeros = () => {
     return (
-        <div>
+        <div className="div-info-pasajeroros">
             <section>
                 <div className="seccion-titulo-pasajeros">
                     <h1 className="titulo-pasajeros">
@@ -23,10 +23,10 @@ const InformacionPasajeros = () => {
                             <label htmlFor="">Indique su sexo</label>
                             <br />
                             <label htmlFor="femenino">Femenino</label>
-                            <input type="checkbox" className="checkbox" id="femenino" name="sexo" value="Femenino" />
+                            <input type="radio" className="checkbox" id="femenino" name="sexo" value="Femenino" />
                             <br />
                             <label htmlFor="masculino">Masculino</label>
-                            <input type="checkbox" id="masculino" name="sexo" value="Masculino" />
+                            <input type="radio" id="masculino" name="sexo" value="Masculino" />
                         </div>
 
                         <button type="button" className="boton-continuar" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

@@ -12,6 +12,11 @@ header {
   background-color: white;
   width: 100%;
   padding: 5px;
+  position: sticky; /* Fix the header at the top */
+  top: 0; /* Align the header to the top */
+  left: 0; /* Align the header to the left */
+  z-index: 1000; /* Ensure the header is above other elements */
+  height: 60px; /* Set a specific height for the header */
 }
 
 
@@ -180,6 +185,15 @@ header {
   background-color: #d78f00;
   transform: scale(1.1);
 }
+
+
+/*---- Info pasajeros -----*/
+
+.div-info-pasajeroros{
+  width: 100%;
+  padding: 10px;
+}
+
 
 /* Footer */
 footer {
@@ -374,6 +388,11 @@ main {
     font-size: small;
   }
 
+  .divOpcionesPesoEquipajes:hover, .divOpcionesEquipajesEspeciales:hover {
+    transform: scale(1);
+    box-shadow: 0px 0px 0px;
+  }
+
   .seccionEquipaje {
     width: 80%;
     margin: 20px auto 30px auto;
@@ -404,11 +423,11 @@ main {
 
 .extras-container {
   width: 100vw; /* Use full viewport width */
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center; /* Center the content horizontally */
   align-items: center; /* Center the content vertically */
-}
+  }
 
 .divBody {
   width: 100%; /* Occupy full width */
@@ -517,6 +536,7 @@ ul{
       font-weight:normal;
       padding: 15px;
       border: none;
+      cursor: pointer;
   }
 
 
@@ -534,8 +554,6 @@ ul{
     align-items: center;
     z-index: 1000;
   }
-
-
 
   .modal {
       display: none; 

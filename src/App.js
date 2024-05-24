@@ -9,6 +9,7 @@ import Extras from './pages/Extras';
 import InformacionPasajeros from './pages/InfoPasajeros';
 import Registro from './pages/Registro';
 import Nosotros from './pages/Nosotros';
+import MetodosDePago from './pages/MetodosDePago';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/extras' element={<Extras />} />
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/informacion-pasajeros' element={<InformacionPasajeros />} />
+          <Route path='/metodos-de-pago' element={<MetodosDePago />} />
         </Routes>
       </Layout>
     </Router>

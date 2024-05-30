@@ -7,13 +7,14 @@ const Layout = ({ children }) => {
     const [isModalOpen, setModalOpen] = useState(false);
 
     const cabecera = {
-        // backgroundColor: 'rgb(255, 253, 253)',
+        backgroundColor: 'rgb(255, 253, 253)',
         width: '100%',
         height: 'auto',
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
         padding: '10px 20px',
+        position: 'fixed',
     }
 
     const logo = {

@@ -3,18 +3,59 @@ import '../App.css';
 
 const Extras = () => {
 
-    const seleccionarRadio = (div) => {
-        const radio = div.currentTarget.querySelector('input[type="radio"]');
-        radio.checked = true;
+
+    const extrasContainer = {
+        widht: '100vw',
+        height: '100vh',
+        display: 'flex',
+        
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#faebd7'
     }
 
+    const divBody = {
+        width: '100%',
+        maxWidth: '1200px',
+    }
+
+    const divEquipajes = {
+        flexDirection: 'column',
+        width: '60%',
+        margin: '0 auto',
+    }
+
+    const formPesoEquipajes = {
+        display: 'flex',
+        flexDirection: 'row',
+    }
+
+    const equipajeEspecial = {
+        marginTop: '10px',
+    }
+
+    const seccionEquipaje = {
+        backgroundColor: "#ffa800",
+        width: "35%",
+        padding: "25px",
+        margin: "0 4% 8% 0",
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "center",
+        border: "1px solid black",
+        borderRadius: "20px"
+    }
+
+
+
+
     return (
-        <div className="extras-container" style={{backgroundColor:"#faebd7"}}>
-            <div className="divBody">
+        <div style={extrasContainer}>
+            <div style={divBody}>
                 <main>
-                    <div className="divEquipajes">
-                        <form className="formPesoEquipajes" method="post">
-                            <div className="divOpcionesPesoEquipajes" onClick={seleccionarRadio}>
+                    <div style={divEquipajes}>
+                        <form style={formPesoEquipajes} method="post">
+                            <div className="divOpcionesPesoEquipajes">
                                 <img src="/img/equipaje de bodega 1.png" alt="" className="imgOpcionesPesoEquipajes" />
                                 <label>Equipaje hasta 9kg $10000 </label>
                                 <br />
@@ -34,7 +75,7 @@ const Extras = () => {
                             </div>
                         </form>
 
-                        <div className="equipajeEspecial">
+                        <div style={equipajeEspecial}>
                             <form className="formEquipajeEspecial" method="post">
                                 <div className="divOpcionesEquipajesEspeciales">
                                     <img src="/img/equipaje de mano.png" alt="" className="imgEquipajeEspecial" />
@@ -57,9 +98,9 @@ const Extras = () => {
                     </div>
                 </main>
 
-                <section className="seccionEquipaje" >
-                    <div>
-                        <h4>RESUMEN DE VUELO</h4>
+                <section style={seccionEquipaje} >
+                    <div style={{ height:'100%', backgroundColor:'white', borderRadius:'20px', padding:'2.5%', fontSize:'medium'}}>
+                        <h4 style={{fontSize:'medium'}}>RESUMEN DE VUELO</h4>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos fuga quod facere esse quibusdam rem placeat alias dolorem saepe pariatur soluta dolores numquam asperiores voluptatem provident, consequatur expedita modi eius!</p>
                     </div>
                 </section>

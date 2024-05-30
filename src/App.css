@@ -225,16 +225,6 @@ main {
   flex-grow: 2;
 }
 
-.divEquipajes {
-  flex-direction: column;
-  width: 60%;
-  margin: 0 auto;
-}
-
-.formPesoEquipajes {
-  display: flex;
-  flex-direction: row;
-}
 
 .divOpcionesPesoEquipajes {
   display: flex;
@@ -266,9 +256,7 @@ main {
   border-radius: 50%;
 }
 
-.equipajeEspecial {
-  margin-top: 10px;
-}
+
 
 .divOpcionesEquipajesEspeciales {
   display: flex;
@@ -309,29 +297,6 @@ main {
   transform: scale(1.1);
   transition-duration: .2s;
   box-shadow: 5px 5px 10px rgb(49, 49, 49);
-}
-
-.seccionEquipaje {
-  background-color: #ffa800;
-  width: 35%;
-  padding: 25px;
-  margin: 0 4% 8% 0;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  border: 1px solid black;
-  border-radius: 20px;
-}
-
-.seccionEquipaje div {
-  height: 100%;
-  background-color: white;
-  border-radius: 20px;
-  padding: 2.5%;
-}
-
-.seccionEquipaje div h4, .seccionEquipaje div p {
-  font-size: medium;
 }
 
 /* Responsive Design */
@@ -401,19 +366,6 @@ main {
 }
 
 
-
-.extras-container {
-  width: 100vw; /* Use full viewport width */
-  height: 100vh;
-  display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
-}
-
-.divBody {
-  width: 100%; /* Occupy full width */
-  max-width: 1200px; /* Set maximum width if needed */
-}
 
 .main {
   width: 100%; /* Occupy full width */

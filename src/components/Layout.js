@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
         flexWrap: 'wrap',
         justifyContent: 'space-between',
         padding: '10px 20px',
-        position: 'fixed',
+        position: 'sticky',
     }
 
     const logo = {

@@ -12,11 +12,28 @@ const Login = () => {
         // handle login logic here
     };
 
+    const divFormulario={
+
+        width: '90%',
+        maxWidth: '400px',
+        textAlign: 'center',
+        borderRadius: '15px',
+        border: '1px solid black',
+        backgroundColor: 'rgb(255, 255, 255)',
+        padding: '3%',
+
+    }
+    const formRegistro={
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+    }
+
     return (
         <section className="sectionLogin">
-            <div className="divFormulario">
+            <div className="divFormulario" style={divFormulario}>
                 <h1 className="loginTitle">Iniciar Sesion</h1>
-                <form className="formRegistro" onSubmit={handleSubmit}>
+                <form className="formRegistro" style={formRegistro} onSubmit={handleSubmit}>
                     <input
                         className="inputRegistro"
                         type="email"

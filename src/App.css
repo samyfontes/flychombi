@@ -61,19 +61,6 @@ header {
   padding-top: 5px;
 }
 
-.sectionRegistro {
-  background-position: center;
-  align-items: center;
-  text-align: center;
-  height: 80vh;
-  width: 100%;
-  background-color: #ffa800;
-  display: flex;
-  justify-content: center;
-  box-shadow: #4F4C4D;
-  margin-top: auto;
-}
-
 .sectionLogin {
   background-position: center;
   align-items: center;
@@ -85,22 +72,6 @@ header {
   justify-content: center;
   box-shadow: #4F4C4D;
   margin-top: auto;
-}
-
-.divFormulario {
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  border-radius: 15px;
-  border: 1px solid black;
-  background-color: rgb(255, 255, 255);
-  padding: 3%;
-}
-
-.formRegistro {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 }
 
 .inputRegistro {
@@ -138,7 +109,6 @@ header {
   transform: scale(1.1);
   background-color: #d78f00;
 }
-
 /* Login Section */
 .login {
   width: 100vw; 
@@ -201,7 +171,7 @@ footer {
   height: 12vh;
   text-align: center;
   display: flex;
-  margin-top: auto;
+  margin: auto;
 }
 
 .divFooter {
@@ -227,10 +197,10 @@ footer {
 }
 
 /* Additional Styles from styles.css */
-.divBody {
+/* .divBody {
   display: flex;
   flex-direction: row;
-}
+} */
 
 main {
   display: flex;
@@ -239,18 +209,6 @@ main {
   flex-grow: 2;
 }
 
-
-.divOpcionesPesoEquipajes {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #ffa800;
-  margin: 10px;
-  padding: 5px;
-  text-align: center;
-  border-radius: 10px;
-  cursor: pointer;
-}
 
 .divOpcionesPesoEquipajes:hover, .divOpcionesEquipajesEspeciales:hover {
   transform: scale(1.1);
@@ -263,49 +221,10 @@ main {
   font-size: medium;
 }
 
-.imgOpcionesPesoEquipajes {
-  margin: auto;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-}
-
-
-
-.divOpcionesEquipajesEspeciales {
-  display: flex;
-  line-height: 80px;
-  height: 80px;
-  background-color: #ffa800;
-  margin: 10px;
-  padding: 5px;
-  text-align: center;
-  justify-content: space-around;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
 .divOpcionesEquipajesEspeciales label {
   margin: auto;
 }
 
-.imgEquipajeEspecial {
-  width: 60px;
-  height: 60px;
-  margin-top: auto;
-  margin-bottom: auto;
-  border-radius: 50%;
-}
-
-#btnContinuar {
-  background-color: #ffa800;
-  width: 60%;
-  height: 40px;
-  border-radius: 50px;
-  margin: 5% 0 8% 20%;
-  font-size: medium;
-  cursor: pointer;
-}
 
 #btnContinuar:hover {
   transform: scale(1.1);
@@ -324,6 +243,7 @@ main {
   }
 
   .divBody {
+    display: flex;
     flex-direction: column;
   }
 
@@ -356,6 +276,11 @@ main {
   .divOpcionesPesoEquipajes:hover, .divOpcionesEquipajesEspeciales:hover {
     transform: scale(1);
     box-shadow: 0px 0px 0px;
+  }
+
+  #btnContinuar:hover {
+    transform: scale(1);
+    box-shadow: 0px 0px 0px rgb(49, 49, 49);
   }
 
   .seccionEquipaje {

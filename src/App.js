@@ -11,6 +11,7 @@ import Registro from './pages/Registro';
 import Nosotros from './pages/Nosotros';
 import AdminVuelos from './pages/AdminVuelos';
 import AdminUsuarios from './pages/AdminUsuarios';
+import MetodosDePago from './pages/MetodosDePago';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/informacion-pasajeros' element={<InformacionPasajeros />} />
           <Route path='/admin/vuelos' element={<AdminVuelos />} />
           <Route path='/admin/usuarios' element={<AdminUsuarios />} />
+          <Route path='/metodos-de-pago' element={<MetodosDePago />}/>
         </Routes>
       </Layout>
     </Router>

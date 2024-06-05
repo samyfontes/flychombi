@@ -45,17 +45,17 @@ const Layout = ({ children }) => {
         margin: '5px',
     }
 
-const user = {
-    name: 'usuario',
-    email: 'falso123@gmail.com',
-    phone: '+54123456789',
-    dni: '12345678912',
-    payment: 'Mastercad **12',
-};
+    const user = {
+        name: 'usuario',
+        email: 'falso123@gmail.com',
+        phone: '+54123456789',
+        dni: '12345678912',
+        payment: 'Mastercad **12',
+    };
 
 return (
     <div>
-        <header style={cabecera}>
+        <header style={cabecera} className="container mt-4">
             <div style={logo}>
                 <Link to="/">
                     <img style={logoImg} src="/img/flychombi logo.png" alt="logoFly" />

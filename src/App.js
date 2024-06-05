@@ -11,6 +11,8 @@ import Registro from './pages/Registro';
 import Nosotros from './pages/Nosotros';
 import AdminVuelos from './pages/AdminVuelos';
 import AdminUsuarios from './pages/AdminUsuarios';
+import SearchResults from './pages/SearchResults';
+import ModalUsuario from './components/ModalUsuario';
 import MetodosDePago from './pages/MetodosDePago';
 
 function App() {

@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { db } from '../firebase';
+import { collection, query, getDocs } from 'firebase/firestore';
 
 // El componente AdminVuelos se encarga de renderizar la vista del admin para la administración de vuelos.
 // Esta vista consta de una tabla que muestra los vuelos existentes en la base de datos y permite al admin
@@ -61,6 +63,25 @@ const AdminVuelos = () => {
         fontWeight: "bold"
     };
 
+    const [flights, setFlights] = useState([]);
+
+    useEffect(() => {
+        fetchFlightData();
+    }, []);
+
+
+    const fetchFlightData = async () => {
+        try {
+            console.log("fetching flight data");
+            const q = query(collection(db, "flights"));
+            const querySnapshot = await getDocs(q);
+            const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setFlights(flightData);
+        } catch (error) {
+            console.error('Error fetching flights:', error);
+        }
+    }
+
     return (
         <div style={containerStyle}>
             <h1 style={headerStyle}>Administrar Vuelos</h1>
@@ -72,36 +93,28 @@ const AdminVuelos = () => {
                         <th style={thStyle}>Destino</th>
                         <th style={thStyle}>Fecha</th>
                         <th style={thStyle}>Hora</th>
-                        <th style={thStyle}>Capacidad</th>
+                        <th style={thStyle}>Disponibilidad</th>
+                        <th style={thStyle}>Capacidad Total</th>
                         <th style={thStyle}>Precio</th>
                         <th style={thStyle}>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td style={tdStyle}>Santiago</td>
-                        <td style={tdStyle}>Concepción</td>
-                        <td style={tdStyle}>2021-10-10</td>
-                        <td style={tdStyle}>10:00</td>
-                        <td style={tdStyle}>100</td>
-                        <td style={tdStyle}>10000</td>
-                        <td style={tdStyle}>
-                            <button style={buttonStyle}>Modificar</button>
-                            <button style={{ ...buttonStyle, ...buttonHoverStyle }}>Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style={tdStyle}>Concepción</td>
-                        <td style={tdStyle}>Santiago</td>
-                        <td style={tdStyle}>2021-10-10</td>
-                        <td style={tdStyle}>12:00</td>
-                        <td style={tdStyle}>100</td>
-                        <td style={tdStyle}>10000</td>
-                        <td style={tdStyle}>
-                            <button style={buttonStyle}>Modificar</button>
-                            <button style={{ ...buttonStyle, ...buttonHoverStyle }}>Eliminar</button>
-                        </td>
-                    </tr>
+                {flights.map(flight => (
+                        <tr key={flight.id}>
+                            <td style={tdStyle}>{flight.flight_origin}</td>
+                            <td style={tdStyle}>{flight.flight_destination}</td>
+                            <td style={tdStyle}>{flight.flight_date}</td>
+                            <td style={tdStyle}>{"10:00"}</td>
+                            <td style={tdStyle}>{flight.flight_availability}</td>
+                            <td style={tdStyle}>{flight.flight_seats.length}</td>
+                            <td style={tdStyle}>{flight.flight_price}</td>
+                            <td style={tdStyle}>
+                                <button style={buttonStyle}>Modificar</button>
+                                <button style={{ ...buttonStyle, ...buttonHoverStyle }}>Eliminar</button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

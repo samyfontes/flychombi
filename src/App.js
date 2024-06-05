@@ -11,6 +11,8 @@ import Registro from './pages/Registro';
 import Nosotros from './pages/Nosotros';
 import AdminVuelos from './pages/AdminVuelos';
 import AdminUsuarios from './pages/AdminUsuarios';
+import SearchResults from './pages/SearchResults';
+import ModalUsuario from './components/ModalUsuario';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route path='/informacion-pasajeros' element={<InformacionPasajeros />} />
           <Route path='/admin/vuelos' element={<AdminVuelos />} />
           <Route path='/admin/usuarios' element={<AdminUsuarios />} />
+          <Route path='/results' element={<SearchResults />} /> 
+          <Route path='/modal' element={<ModalUsuario />} />
         </Routes>
       </Layout>
     </Router>

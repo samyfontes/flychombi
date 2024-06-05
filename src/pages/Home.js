@@ -1,28 +1,25 @@
-import react, { useEffect, useState } from 'react';
+// Home.js
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
-import FlightCard from '../components/FlightCard';
-
 
 const Home = () => {
     const [origins, setOrigins] = useState([]);
     const [destinations, setDestinations] = useState([]);
     const [selectedOrigin, setSelectedOrigin] = useState('');
     const [selectedDestination, setSelectedDestination] = useState('');
-    const [flights, setFlights] = useState([]);
-    const [filteredFlights, setFilteredFlights] = useState([]);
+    const [passengerCount, setPassengerCount] = useState(1);
+    const [tripType, setTripType] = useState('one-way');
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchFlightData();
     }, []);
 
-    useEffect(() => {
-        filterFlights();
-    }, [selectedOrigin, selectedDestination, flights]);
-
     const fetchFlightData = async () => {
         try {
-            console.log("fetching flight data");
             const q = query(collection(db, "flights"));
             const querySnapshot = await getDocs(q);
             const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -35,32 +32,57 @@ const Home = () => {
                 destinationSet.add(flight.flight_destination);
             });
 
-            console.log('origins:', originSet);
-            console.log('destinations:', destinationSet);
-
             setOrigins([...originSet]);
             setDestinations([...destinationSet]);
-            setFlights(flightData);
         } catch (error) {
             console.error('Error fetching flights:', error);
         }
     }
 
-    const filterFlights = () => {
-        if (selectedOrigin && selectedDestination) {
-            const filtered = flights.filter(flight => 
-                flight.flight_origin === selectedOrigin && 
-                flight.flight_destination === selectedDestination
+    const handleSearch = async () => {
+        if (!selectedOrigin || !selectedDestination) {
+            setErrorMessage('Por favor, selecciona un origen y un destino.');
+            return;
+        }
+
+        try {
+            const q = query(collection(db, "flights"));
+            const querySnapshot = await getDocs(q);
+            const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            const filteredFlights = flightData.filter(flight =>
+                flight.flight_origin === selectedOrigin &&
+                flight.flight_destination === selectedDestination &&
+                flight.flight_availability >= passengerCount
             );
-            setFilteredFlights(filtered);
-        } else {
-            setFilteredFlights([]);
+
+            if (filteredFlights.length === 0) {
+                setErrorMessage('No hay vuelos disponibles para esta selección.');
+                return;
+            }
+
+            setErrorMessage('');
+            navigate('/results', {
+                state: {
+                    selectedOrigin,
+                    selectedDestination,
+                    passengerCount,
+                    tripType,
+                    filteredFlights
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching flights:', error);
         }
     }
 
     return (
         <div>
             <div className="button-container">
+                <div className="btn-group" role="group" aria-label="Trip type">
+                    <button type="button" className={`btn btn-primary ${tripType === 'one-way' ? 'active' : ''}`} onClick={() => setTripType('one-way')}>Solo ida</button>
+                    <button type="button" className={`btn btn-primary ${tripType === 'round-trip' ? 'active' : ''}`} onClick={() => setTripType('round-trip')}>Ida y vuelta</button>
+                </div>
                 <div>
                     <select className="form-select" id="select-origin" aria-label="Select origin"
                         value={selectedOrigin} onChange={(e) => setSelectedOrigin(e.target.value)}>
@@ -79,21 +101,19 @@ const Home = () => {
                         ))}
                     </select>
                 </div>
-            </div>
-            <div className="flight-cards-container">
-                {filteredFlights.map(flight => (
-                    <div className="col-md-4" key={flight.id}>
-                        <FlightCard flight={flight} />
-                    </div>
-                ))}
-            </div>
-            <div className="slider-box">
-                <ul>
-                    <li><img src="img/s1.jpg" alt="" /></li>
-                    <li><img src="img/s2.jpg" alt="" /></li>
-                    <li><img src="img/s3.jpg" alt="" /></li>
-                    <li><img src="img/s4.jpg" alt="" /></li>
-                </ul>
+                <div>
+                    <input 
+                        type="number" 
+                        className="form-control" 
+                        id="select-passenger-count" 
+                        aria-label="Select passenger count" 
+                        value={passengerCount} 
+                        min="1" 
+                        onChange={(e) => setPassengerCount(Number(e.target.value))} 
+                    />
+                </div>
+                <button className="btn btn-success" onClick={handleSearch}>Buscar vuelos</button>
+                {errorMessage && <div className="alert alert-danger mt-3">{errorMessage}</div>}
             </div>
         </div>
     )

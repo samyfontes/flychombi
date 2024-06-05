@@ -1,18 +1,30 @@
 // FlightCard.js
 import React from 'react';
+import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 
 const FlightCard = ({ flight, onSelect }) => {
     return (
-        <div className="card" style={{ width: '18rem', cursor: 'pointer' }} onClick={onSelect}>
-            <img className="card-img-top" src="img/flight.jpg" alt="Card image cap" />
-            <div className="card-body">
-                <h5 className="card-title">Vuelo de {flight.flight_origin} a {flight.flight_destination}</h5>
-                <p className="card-text">Fecha: {flight.flight_date}</p>
-                <p className="card-text">Precio: ${flight.flight_price}</p>
-                <p className="card-text">Disponibilidad: {flight.flight_availability}</p>
-                <button className="btn btn-primary">Seleccionar</button>
-            </div>
-        </div>
+        <Card sx={{ maxWidth: 345, cursor: 'pointer' }} onClick={onSelect}>
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                    Vuelo de {flight.flight_origin} a {flight.flight_destination}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Fecha: {flight.flight_date}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Precio: ${flight.flight_price}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Disponibilidad: {flight.flight_availability}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small" color="primary">
+                    Seleccionar
+                </Button>
+            </CardActions>
+        </Card>
     );
 }
 

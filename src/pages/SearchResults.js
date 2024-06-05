@@ -54,33 +54,24 @@ const SearchResults = () => {
     };
 
     return (
-        <div>
-            <div className="container">
-                <div className="row">
-                    {!selectedOutboundFlight && (
-                        <>
-                            <h4>Selecciona el vuelo de ida</h4>
-                            {outboundFlights.map(flight => (
-                                <div className="col-md-4" key={flight.id}>
-                                    <FlightCard flight={flight} onSelect={() => handleOutboundFlightSelect(flight)} />
-                                </div>
-                            ))}
-                        </>
-                    )}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+            {!selectedOutboundFlight && (
+                <>
+                    <h4>Selecciona el vuelo de ida</h4>
+                    {outboundFlights.map(flight => (
+                        <FlightCard key={flight.id} flight={flight} onSelect={() => handleOutboundFlightSelect(flight)} />
+                    ))}
+                </>
+            )}
 
-                    {tripType === 'round-trip' && selectedOutboundFlight && (
-                        <>
-                            <h4>Selecciona el vuelo de vuelta</h4>
-                            {returnFlights.map(flight => (
-                                <div className="col-md-4" key={flight.id}>
-                                    <FlightCard flight={flight} onSelect={() => handleReturnFlightSelect(flight)} />
-                                </div>
-                            ))}
-                        </>
-                    )}
-                </div>
-                {errorMessage && <div className="alert alert-danger mt-3">{errorMessage}</div>}
-            </div>
+            {tripType === 'round-trip' && selectedOutboundFlight && (
+                <>
+                    <h4>Selecciona el vuelo de vuelta</h4>
+                    {returnFlights.map(flight => (
+                        <FlightCard key={flight.id} flight={flight} onSelect={() => handleReturnFlightSelect(flight)} />
+                    ))}
+                </>
+            )}
         </div>
     );
 }

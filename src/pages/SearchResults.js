@@ -109,11 +109,20 @@ const SearchResults = () => {
 
     const handleConfirmSelection = () => {
         if (selectedOutboundFlight && (tripType === 'one-way' || (tripType === 'round-trip' && selectedReturnFlight))) {
-            navigate('/informacion-pasajeros', { state: { selectedOutboundFlight, selectedReturnFlight } });
+            navigate('/informacion-pasajeros', {
+                state: {
+                    selectedOutboundFlight,
+                    selectedReturnFlight,
+                    selectedOrigin,
+                    selectedDestination,
+                    passengerCount
+                }
+            });
         } else {
             setErrorMessage('Por favor seleccione los vuelos de ida y vuelta.');
         }
     };
+    
 
     return (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '180px', minHeight: '100vh'}}>

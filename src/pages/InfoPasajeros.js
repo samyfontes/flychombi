@@ -1,13 +1,13 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import '../App.css';
 
-const InformacionPasajeros = (location) => {
-
+const InformacionPasajeros = () => {
+    const location = useLocation();
     const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount } = location.state || {};
 
-
     return (
-        <div className="div-info-pasajeroros">
+        <div className="div-info-pasajeros">
             <section>
                 <div className="seccion-titulo-pasajeros">
                     <h1 className="titulo-pasajeros">
@@ -57,11 +57,11 @@ const InformacionPasajeros = (location) => {
 
                     <div className="informacion-sobre-vuelo">
                         <h2>Información sobre la selección de vuelos:</h2>
-                            <p>Origen: {selectedOrigin}</p>
-                            <p>Destino: {selectedDestination}</p>
-                            <p>Cantidad de pasajeros: {passengerCount}</p>
-                            <p>Vuelo de ida: {selectedOutboundFlight ? selectedOutboundFlight.name : 'No seleccionado'}</p>
-                            <p>Vuelo de vuelta: {selectedReturnFlight ? selectedReturnFlight.name : 'No seleccionado'}</p>
+                        <p>Origen: {selectedOrigin}</p>
+                        <p>Destino: {selectedDestination}</p>
+                        <p>Cantidad de pasajeros: {passengerCount}</p>
+                        <p>Vuelo de ida: {selectedOutboundFlight ? selectedOutboundFlight.name : 'No seleccionado'}</p>
+                        <p>Vuelo de vuelta: {selectedReturnFlight ? selectedReturnFlight.name : 'No seleccionado'}</p>
                     </div>
                 </div>
             </section>

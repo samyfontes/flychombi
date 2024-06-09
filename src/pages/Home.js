@@ -77,7 +77,7 @@ const Home = () => {
     }
 
     return (
-        <div>
+        <div style={{ minHeight: '100vh' }}>
             <div className="button-container">
                 <div className="btn-group" role="group" aria-label="Trip type">
                     <button type="button" className={`btn btn-primary ${tripType === 'one-way' ? 'active' : ''}`} onClick={() => setTripType('one-way')}>Solo ida</button>

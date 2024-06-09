@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
@@ -17,6 +17,7 @@ const SearchResults = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [departureMonthYear, setDepartureMonthYear] = useState('');
     const [arrivalMonthYear, setArrivalMonthYear] = useState('');
+    const buttonRef = useRef(null);
 
     useEffect(() => {
         fetchFlightData();
@@ -25,6 +26,12 @@ const SearchResults = () => {
     useEffect(() => {
         filterFlights();
     }, [departureMonthYear, arrivalMonthYear, flights]);
+
+    useEffect(() => {
+        if (selectedReturnFlight && buttonRef.current) {
+            buttonRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [selectedReturnFlight]);
 
     const fetchFlightData = async () => {
         try {
@@ -94,6 +101,10 @@ const SearchResults = () => {
 
     const handleReturnFlightSelect = (flight) => {
         setSelectedReturnFlight(flight);
+        const confirmButton = document.getElementById('confirmButton');
+        if (confirmButton) {
+            confirmButton.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     const handleConfirmSelection = () => {
@@ -105,7 +116,7 @@ const SearchResults = () => {
     };
 
     return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '180px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '180px', minHeight: '100vh'}}>
             <div>
                 <h4>Fecha de salida (Mes/Año)</h4>
                 <input type="month" value={departureMonthYear} onChange={e => setDepartureMonthYear(e.target.value)} />
@@ -146,9 +157,16 @@ const SearchResults = () => {
                 </>
             )}
 
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', }}>
             {(selectedOutboundFlight && (tripType === 'one-way' || (tripType === 'round-trip' && selectedReturnFlight))) && (
-                <button onClick={handleConfirmSelection}>Confirmar selección de vuelos</button>
+                <button style={{backgroundColor: '#ffa800',
+                    width: '60%',
+                    height: '40px',
+                    borderRadius: '50px',
+                    fontSize: 'medium',
+                    cursor: 'pointer'}} ref={buttonRef} onClick={handleConfirmSelection}>Confirmar selección de vuelos</button>
             )}
+            </div>
 
             {errorMessage && <p>{errorMessage}</p>}
         </div>

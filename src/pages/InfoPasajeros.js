@@ -1,7 +1,11 @@
 import React from 'react';
 import '../App.css';
 
-const InformacionPasajeros = () => {
+const InformacionPasajeros = (location) => {
+
+    const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount } = location.state || {};
+
+
     return (
         <div className="div-info-pasajeroros">
             <section>
@@ -52,9 +56,12 @@ const InformacionPasajeros = () => {
                     </form>
 
                     <div className="informacion-sobre-vuelo">
-                        <h1>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem dicta aut maxime temporibus, repudiandae expedita earum totam quam vel delectus. Earum cumque magnam sapiente veniam, ullam eius pariatur autem perspiciatis!
-                        </h1>
+                        <h2>Información sobre la selección de vuelos:</h2>
+                            <p>Origen: {selectedOrigin}</p>
+                            <p>Destino: {selectedDestination}</p>
+                            <p>Cantidad de pasajeros: {passengerCount}</p>
+                            <p>Vuelo de ida: {selectedOutboundFlight ? selectedOutboundFlight.name : 'No seleccionado'}</p>
+                            <p>Vuelo de vuelta: {selectedReturnFlight ? selectedReturnFlight.name : 'No seleccionado'}</p>
                     </div>
                 </div>
             </section>

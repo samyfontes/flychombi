@@ -60,8 +60,11 @@ const InformacionPasajeros = () => {
                         <p>Origen: {selectedOrigin}</p>
                         <p>Destino: {selectedDestination}</p>
                         <p>Cantidad de pasajeros: {passengerCount}</p>
-                        <p>Vuelo de ida: {selectedOutboundFlight ? selectedOutboundFlight.name : 'No seleccionado'}</p>
-                        <p>Vuelo de vuelta: {selectedReturnFlight ? selectedReturnFlight.name : 'No seleccionado'}</p>
+                        {selectedOutboundFlight && <p>Precio del vuelo de ida: ${selectedOutboundFlight.flight_price}</p>}
+                        {selectedOutboundFlight && <p>Fecha del vuelo de ida: {selectedOutboundFlight.flight_price}</p>}
+                        {selectedReturnFlight && <p>Precio del vuelo de vuelta: ${selectedReturnFlight.price}</p>}
+                        {selectedReturnFlight && <p>Fecha del vuelo de vuelta: {selectedReturnFlight.flight_date}</p>}
+
                     </div>
                 </div>
             </section>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../App.css';
 
 const InformacionPasajeros = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount } = location.state || {};
 
     const [passengerData, setPassengerData] = useState({
@@ -31,34 +32,37 @@ const InformacionPasajeros = () => {
         }));
     };
 
-    const handleAddPassenger = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        // Agrega los datos del pasajero actual a la lista de pasajeros
         setPassengers(prevPassengers => [...prevPassengers, passengerData]);
-        // Reinicia el estado de los datos del pasajero para el próximo pasajero
         setPassengerData({
             name: '',
             birthDate: '',
             document: '',
             gender: '',
         });
-        // Avanza al siguiente pasajero
         setPassengerIndex(prevIndex => prevIndex + 1);
     };
 
-    const displayPassengerData = () => {
-        // Mostrar los datos de los pasajeros después de que se hayan ingresado todos los datos
-        if (passengers.length === passengerCount) {
-            return passengers.map((passenger, index) => (
-                <div key={index}>
-                    <h3>Pasajero {index + 1}</h3>
-                    <p>Nombre: {passenger.name}</p>
-                    <p>Fecha de nacimiento: {passenger.birthDate}</p>
-                    <p>Documento: {passenger.document}</p>
-                    <p>Género: {passenger.gender}</p>
-                </div>
-            ));
-        }
+    const handleContinue = () => {
+        console.log('Datos enviados:', {
+            selectedOutboundFlight,
+            selectedReturnFlight,
+            selectedOrigin,
+            selectedDestination,
+            passengerCount,
+            passengers
+        });
+        navigate('/extras', {
+            state: {
+                selectedOutboundFlight,
+                selectedReturnFlight,
+                selectedOrigin,
+                selectedDestination,
+                passengerCount,
+                passengers
+            }
+        });
     };
 
     return (
@@ -66,13 +70,13 @@ const InformacionPasajeros = () => {
             <section>
                 <div className="seccion-titulo-pasajeros">
                     <h1 className="titulo-pasajeros">
-                        Información de los pasajeros
+                        Informacion de los pasajeros
                     </h1>
                 </div>
             </section>
             <section>
                 <div className="contenedor-principal">
-                    <form className="formulario-pasajeros" onSubmit={handleAddPassenger}>
+                    <form className="formulario-pasajeros" onSubmit={handleSubmit}>
                         <input
                             type="text"
                             id="name"
@@ -135,14 +139,55 @@ const InformacionPasajeros = () => {
                             Agregar pasajero
                         </button>
                         <br></br>
-                            {/* Mostrar el botón Continuar solo si todos los pasajeros han sido agregados */}
-                        {passengers.length === passengerCount && (
-                            <Link to="/extras" state={{ passengers }}>
-                                <button className="boton-continuar" style={{width: '100%'}}>
-                                    Continuar
-                                </button>
-                            </Link>
-                        )}
+                        <button
+                            type="button"
+                            className="boton-continuar"
+                            onClick={handleContinue}
+                        >
+                            Continuar
+                        </button>
+                        {/* ----- MODAL ---- */}
+                        <div
+                            className="modal fade"
+                            id="staticBackdrop"
+                            data-bs-backdrop="static"
+                            data-bs-keyboard="false"
+                            tabIndex="-1"
+                            aria-labelledby="staticBackdropLabel"
+                            aria-hidden="true"
+                        >
+                            
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="staticBackdropLabel">
+                                            Tenga en cuenta la siguiente informacion de su vuelo
+                                        </h5>
+                                        <button
+                                            type="button"
+                                            className="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"
+                                        ></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        Equipaje: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde ab earum cupiditate, optio perspiciatis harum eveniet quisquam veniam laudantium dolorem maiores facere. Consequatur eius labore ipsum beatae deserunt nihil ducimus! Pasajeros: Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsum quidem enim explicabo minus doloremque architecto unde tenetur, quae repellendus beatae maiores neque soluta repudiandae ut dignissimos perspiciatis necessitatibus nulla? Fechas: Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, nihil dolore dolores nostrum sed pariatur tempora. Vero, iste commodi vel dolorum nobis, expedita magnam deleniti odit maxime magni eligendi quisquam?
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button
+                                            type="button"
+                                            className="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Cerrar
+                                        </button>
+                                        <button type="submit" className="btn btn-warning">
+                                            Continuar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
 
                     <div className="informacion-sobre-vuelo">
@@ -170,6 +215,7 @@ const InformacionPasajeros = () => {
                             </div>
                         )}
                     </div>
+
                 </div>
             </section>
         </div>

@@ -1,14 +1,18 @@
 import React from "react";
+import { useLocation } from 'react-router-dom';
 
 const MetodosDePago = () => {
 
     const globalStyle = {
         fontFamily: 'Arial, Helvetica, sans-serif',
+        minHeight: '100vh',
+        margin: '1%'
     };
 
     const containerStyle = {
         display: 'flex',
         flexDirection: 'row',
+        
     };
 
     const textoIzquierdoStyle = {
@@ -17,6 +21,8 @@ const MetodosDePago = () => {
         flexDirection: 'column',
         flex: 2,
         padding: '20px',
+        height: 'auto',
+
     };
 
     const subtituloStyle = {
@@ -44,6 +50,8 @@ const MetodosDePago = () => {
         padding: '30px',
         marginLeft: '25px',
         flex: 1,
+        minHeight: 'auto',
+
     };
 
     const contenidoStyle = {
@@ -113,6 +121,9 @@ const MetodosDePago = () => {
         transform: 'scale(1.1)',
         transition: '.2s',
     };
+
+    const location = useLocation();
+    const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount, passengers, selectedBaggage } = location.state || {};
 
     return (
         <div style={globalStyle}>
@@ -198,14 +209,34 @@ const MetodosDePago = () => {
                     </div>
                 </div>
                 <div style={textoDerechaStyle}>
-                    <ul style={contenidoStyle}>
-                        <li>Fecha:</li>
-                        <li>Lugar de ida:</li>
-                        <li>Lugar de vuelta:</li>
-                        <li>Horarios:</li>
-                        <li>Información del usuario:</li>
-                    </ul>
-                </div>
+                    <div style={{ height: '100%', backgroundColor: 'white', borderRadius: '20px', padding: '2.5%', fontSize: 'medium' }}>
+                            <h4 style={{ fontSize: 'medium' }}>RESUMEN DE VUELO</h4>
+                            <p>Origen: {selectedOrigin}</p>
+                            <p>Destino: {selectedDestination}</p>
+                            <p>Cantidad de pasajeros: {passengerCount}</p>
+                            {selectedOutboundFlight && <p>Precio del vuelo de ida: ${selectedOutboundFlight.flight_price}</p>}
+                            {selectedOutboundFlight && <p>Fecha del vuelo de ida: {selectedOutboundFlight.flight_date}</p>}
+                            {selectedReturnFlight && <p>Precio del vuelo de vuelta: ${selectedReturnFlight.flight_price}</p>}
+                            {selectedReturnFlight && <p>Fecha del vuelo de vuelta: {selectedReturnFlight.flight_date}</p>}
+
+                            {passengers && passengers.length > 0 && (
+                                <div>
+                                    <h2>Información de los pasajeros:</h2>
+                                    {passengers.map((passenger, index) => (
+                                        <div key={index}>
+                                            <h3>Pasajero {index + 1}</h3>
+                                            <p>Nombre: {passenger.name}</p>
+                                            <p>Fecha de nacimiento: {passenger.birthDate}</p>
+                                            <p>Documento: {passenger.document}</p>
+                                            <p>Género: {passenger.gender}</p>
+                                            <p>Equipaje: {selectedBaggage}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                    </div>
+                    
+                </div>    
             </section>
 
         </div>

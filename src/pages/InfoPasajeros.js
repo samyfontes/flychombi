@@ -5,7 +5,13 @@ import '../App.css';
 const InformacionPasajeros = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount } = location.state || {};
+    const { 
+        selectedOutboundFlight = {}, 
+        selectedReturnFlight = {}, 
+        selectedOrigin = '', 
+        selectedDestination = '', 
+        passengerCount = 1 
+    } = location.state || {};
 
     const [passengerData, setPassengerData] = useState({
         name: '',
@@ -32,27 +38,50 @@ const InformacionPasajeros = () => {
         }));
     };
 
+    const handleValidation = () => {
+        const { name, birthDate, document, gender } = passengerData;
+        if (!name) {
+            alert('Por favor, complete el nombre del pasajero.');
+            return false;
+        }
+        if (!birthDate) {
+            alert('Por favor, complete la fecha de nacimiento.');
+            return false;
+        }
+        if (!document) {
+            alert('Por favor, complete el documento.');
+            return false;
+        }
+        if (!gender) {
+            alert('Por favor, seleccione el género.');
+            return false;
+        }
+        return true;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        setPassengers(prevPassengers => [...prevPassengers, passengerData]);
-        setPassengerData({
-            name: '',
-            birthDate: '',
-            document: '',
-            gender: '',
-        });
-        setPassengerIndex(prevIndex => prevIndex + 1);
+        if (handleValidation()) {
+            setPassengers(prevPassengers => [...prevPassengers, passengerData]);
+            setPassengerData({
+                name: '',
+                birthDate: '',
+                document: '',
+                gender: '',
+            });
+            setPassengerIndex(prevIndex => prevIndex + 1);
+        }
     };
 
     const handleContinue = () => {
-        console.log('Datos enviados:', {
-            selectedOutboundFlight,
-            selectedReturnFlight,
-            selectedOrigin,
-            selectedDestination,
-            passengerCount,
-            passengers
-        });
+        // console.log('Datos enviados:', {
+        //     selectedOutboundFlight,
+        //     selectedReturnFlight,
+        //     selectedOrigin,
+        //     selectedDestination,
+        //     passengerCount,
+        //     passengers
+        // });
         navigate('/extras', {
             state: {
                 selectedOutboundFlight,
@@ -129,23 +158,27 @@ const InformacionPasajeros = () => {
                                 onChange={handleRadioChange}
                             />
                         </div>
-
-                        <button
-                            type="submit"
-                            className="boton-agregar-pasajero"
-                            data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop"
-                        >
-                            Agregar pasajero
-                        </button>
-                        <br></br>
-                        <button
-                            type="button"
-                            className="boton-continuar"
-                            onClick={handleContinue}
-                        >
-                            Continuar
-                        </button>
+                        
+                        {passengerIndex < passengerCount && (
+                            <button
+                                type="submit"
+                                className="boton-agregar-pasajero"
+                                data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop"
+                            >
+                                Agregar pasajero
+                            </button>
+                        )}
+                        <br />
+                        {passengerIndex >= passengerCount && (
+                            <button
+                                type="button"
+                                className="boton-continuar"
+                                onClick={handleContinue}
+                            >
+                                Continuar
+                            </button>
+                        )}
                         {/* ----- MODAL ---- */}
                         <div
                             className="modal fade"
@@ -156,7 +189,6 @@ const InformacionPasajeros = () => {
                             aria-labelledby="staticBackdropLabel"
                             aria-hidden="true"
                         >
-                            
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <div className="modal-header">
@@ -171,7 +203,7 @@ const InformacionPasajeros = () => {
                                         ></button>
                                     </div>
                                     <div className="modal-body">
-                                        Equipaje: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde ab earum cupiditate, optio perspiciatis harum eveniet quisquam veniam laudantium dolorem maiores facere. Consequatur eius labore ipsum beatae deserunt nihil ducimus! Pasajeros: Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsum quidem enim explicabo minus doloremque architecto unde tenetur, quae repellendus beatae maiores neque soluta repudiandae ut dignissimos perspiciatis necessitatibus nulla? Fechas: Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, nihil dolore dolores nostrum sed pariatur tempora. Vero, iste commodi vel dolorum nobis, expedita magnam deleniti odit maxime magni eligendi quisquam?
+                                        Equipaje: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde ab earum cupiditate, optio perspiciatis harum eveniet quisquam veniam laudantium dolorem maiores facere. Consequatur eius labore ipsum beatae deserunt nihil ducimus! Pasajeros: Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsum quidem enim explicabo minus doloremque architecto unde tenetur, quae repellendus beatae mayores neque soluta repudiandae ut dignissimos perspiciatis necessitatibus nulla? Fechas: Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, nihil dolore dolores nostrum sed pariatur tempora. Vero, iste commodi vel dolorum nobis, expedita magnam deleniti odit maxime magni eligendi quisquam?
                                     </div>
                                     <div className="modal-footer">
                                         <button
@@ -205,11 +237,11 @@ const InformacionPasajeros = () => {
                                 <h2>Información de los pasajeros:</h2>
                                 {passengers.map((passenger, index) => (
                                     <div key={index}>
-                                        <h3>Pasajero {index + 1}</h3>
-                                        <p>Nombre: {passenger.name}</p>
-                                        <p>Fecha de nacimiento: {passenger.birthDate}</p>
-                                        <p>Documento: {passenger.document}</p>
-                                        <p>Género: {passenger.gender}</p>
+                                        <b><h3 style={{color:"black"}}>Pasajero {index + 1}</h3></b>
+                                        <p>Nombre: {passenger.name || 'No especificado'}</p>
+                                        <p>Fecha de nacimiento: {passenger.birthDate || 'No especificado'}</p>
+                                        <p>Documento: {passenger.document || 'No especificado'}</p>
+                                        <p>Género: {passenger.gender || 'No especificado'}</p>
                                     </div>
                                 ))}
                             </div>

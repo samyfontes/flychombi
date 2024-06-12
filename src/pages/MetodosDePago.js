@@ -12,7 +12,6 @@ const MetodosDePago = () => {
     const containerStyle = {
         display: 'flex',
         flexDirection: 'row',
-        
     };
 
     const textoIzquierdoStyle = {
@@ -22,7 +21,6 @@ const MetodosDePago = () => {
         flex: 2,
         padding: '20px',
         height: 'auto',
-
     };
 
     const subtituloStyle = {
@@ -41,7 +39,6 @@ const MetodosDePago = () => {
         padding: '20px',
         borderRadius: '10px',
         marginBottom: '20px',
-        
     };
 
     const textoDerechaStyle = {
@@ -51,7 +48,6 @@ const MetodosDePago = () => {
         marginLeft: '25px',
         flex: 1,
         minHeight: 'auto',
-
     };
 
     const contenidoStyle = {
@@ -64,7 +60,6 @@ const MetodosDePago = () => {
         fontSize: '20px',
         listStyleType: 'none',
         height: '100%',
-        
     };
 
     const mpStyle = {
@@ -123,7 +118,9 @@ const MetodosDePago = () => {
     };
 
     const location = useLocation();
-    const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount, passengers, selectedBaggage } = location.state || {};
+    const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount, passengers, selectedBaggage, selectedEspecialBaggage } = location.state || {};
+
+    console.log(selectedBaggage, selectedEspecialBaggage);
 
     return (
         <div style={globalStyle}>
@@ -202,7 +199,6 @@ const MetodosDePago = () => {
                             style={botonContinuarStyle}
                             onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
                             onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
-                            
                         >
                             <b>Continuar</b>
                         </button>
@@ -210,35 +206,38 @@ const MetodosDePago = () => {
                 </div>
                 <div style={textoDerechaStyle}>
                     <div style={{ height: '100%', backgroundColor: 'white', borderRadius: '20px', padding: '2.5%', fontSize: 'medium' }}>
-                            <h4 style={{ fontSize: 'medium' }}>RESUMEN DE VUELO</h4>
-                            <p>Origen: {selectedOrigin}</p>
-                            <p>Destino: {selectedDestination}</p>
-                            <p>Cantidad de pasajeros: {passengerCount}</p>
-                            {selectedOutboundFlight && <p>Precio del vuelo de ida: ${selectedOutboundFlight.flight_price}</p>}
-                            {selectedOutboundFlight && <p>Fecha del vuelo de ida: {selectedOutboundFlight.flight_date}</p>}
-                            {selectedReturnFlight && <p>Precio del vuelo de vuelta: ${selectedReturnFlight.flight_price}</p>}
-                            {selectedReturnFlight && <p>Fecha del vuelo de vuelta: {selectedReturnFlight.flight_date}</p>}
+                        <h4 style={{ fontSize: 'medium' }}>RESUMEN DE VUELO</h4>
+                        <p>Origen: {selectedOrigin}</p>
+                        <p>Destino: {selectedDestination}</p>
+                        <p>Cantidad de pasajeros: {passengerCount}</p>
+                        {selectedOutboundFlight && <p>Precio del vuelo de ida: ${selectedOutboundFlight.flight_price}</p>}
+                        {selectedOutboundFlight && <p>Fecha del vuelo de ida: {selectedOutboundFlight.flight_date}</p>}
+                        {selectedReturnFlight && <p>Precio del vuelo de vuelta: ${selectedReturnFlight.flight_price}</p>}
+                        {selectedReturnFlight && <p>Fecha del vuelo de vuelta: {selectedReturnFlight.flight_date}</p>}
 
-                            {passengers && passengers.length > 0 && (
-                                <div>
-                                    <h2>Información de los pasajeros:</h2>
-                                    {passengers.map((passenger, index) => (
-                                        <div key={index}>
-                                            <h3>Pasajero {index + 1}</h3>
-                                            <p>Nombre: {passenger.name}</p>
-                                            <p>Fecha de nacimiento: {passenger.birthDate}</p>
-                                            <p>Documento: {passenger.document}</p>
-                                            <p>Género: {passenger.gender}</p>
-                                            <p>Equipaje: {selectedBaggage}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
+                        {passengers && passengers.length > 0 && (
+                            <div>
+                                <h2>Información de los pasajeros:</h2>
+                                {passengers.map((passenger, index) => (
+                                    <div key={index}>
+                                        <h3>Pasajero {index + 1}</h3>
+                                        <p>Nombre: {passenger.name || 'No especificado'}</p>
+                                        <p>Fecha de nacimiento: {passenger.birthDate || 'No especificado'}</p>
+                                        <p>Documento: {passenger.document || 'No especificado'}</p>
+                                        <p>Género: {passenger.gender || 'No especificado'}</p>
+                                        {selectedBaggage && (
+                                            <p>Equipaje: {selectedBaggage.name || 'No especificado'} ${selectedBaggage.price || 'No especificado'}</p>
+                                        )}
+                                        {selectedEspecialBaggage && (
+                                            <p>Equipaje especial: {selectedEspecialBaggage.name || 'No especificado'} ${selectedEspecialBaggage.price || 'No especificado'}</p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                    
                 </div>    
             </section>
-
         </div>
     );
 };

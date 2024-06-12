@@ -2,20 +2,10 @@ import React, {useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../App.css';
 
-
 const Extras = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount, passengers } = location.state || {};
-
-    console.log('Datos recibidos:', {
-        selectedOutboundFlight,
-        selectedReturnFlight,
-        selectedOrigin,
-        selectedDestination,
-        passengerCount,
-        passengers
-    });
 
     const extrasContainer = {
         width: '100vw',
@@ -109,21 +99,26 @@ const Extras = () => {
         borderRadius: "20px",
     };
 
-    const [selectedBaggage, setSelectedBaggage] = useState(""); // Estado para almacenar la selección del equipaje
+    const [selectedBaggage, setSelectedBaggage] = useState(null);
+    const [selectedEspecialBaggage, setSelectedEspecialBaggage] = useState(null);
 
-
-    const seleccionarRadio = (div) => {
-        const radio = div.currentTarget.querySelector('input[type="radio"]');
-        radio.checked = true;
-    };
+    const valorEquipajeEspecial = {name: "equipaje especial", price: 12500};
+    const valorEquipajeEspecial2 = {name: "mascota en cabina", price: 15000};
+    const valorEquipaje = {name: "equipaje bodega 9kg", price: 10000};
+    const valorEquipaje2 = {name: "equipaje bodega 15kg", price: 15000};
+    const valorEquipaje3 = {name: "equipaje bodega 20kg", price: 20000};
 
     const handleBaggageSelection = (event) => {
-        // Captura la selección del usuario y almacénala en el estado
-        setSelectedBaggage(event.target.value);
+        console.log("Selected Baggage:", event.target.value);
+        setSelectedBaggage(JSON.parse(event.target.value));
+    };
+
+    const handleSpecialBaggageSelection = (event) => {
+        console.log("Selected Special Baggage:", event.target.value);
+        setSelectedEspecialBaggage(JSON.parse(event.target.value));
     };
 
     const handleContinuar = () => {
-        // Redireccionar a la página de métodos de pago y pasar el estado como parámetro
         navigate('/metodos-de-pago', {
             state: {
                 selectedOutboundFlight,
@@ -132,11 +127,15 @@ const Extras = () => {
                 selectedDestination,
                 passengerCount,
                 passengers,
-                selectedBaggage
+                selectedBaggage,
+                selectedEspecialBaggage
             }
         });
     };
-
+    const seleccionarRadio = (div) => {
+        const radio = div.currentTarget.querySelector('input[type="radio"]');
+        radio.checked = true;
+    };
     return (
         <div style={extrasContainer}>
             <div style={divBody} className='divBody'>
@@ -147,19 +146,19 @@ const Extras = () => {
                                 <img src="/img/equipaje de bodega 1.png" alt="" style={imgOpcionesPesoEquipajes} className="imgOpcionesPesoEquipajes" />
                                 <label>Equipaje hasta 9kg $10000 </label>
                                 <br />
-                                <input type="radio" name="pesoEquipaje" onClick={handleBaggageSelection}/>
+                                <input type="radio" name="pesoEquipaje" value={JSON.stringify(valorEquipaje)} onChange={handleBaggageSelection}/>
                             </div>
                             <div style={divPesoEquiapajes} className="divOpcionesPesoEquipajes" onClick={seleccionarRadio}>
                                 <img src="/img/equipaje de bodega 1.png" alt="" style={imgOpcionesPesoEquipajes} className="imgOpcionesPesoEquipajes" />
                                 <label>Equipaje hasta 15kg $15000 </label>
                                 <br />
-                                <input type="radio" name="pesoEquipaje" onClick={handleBaggageSelection}/>
+                                <input type="radio" name="pesoEquipaje" value={JSON.stringify(valorEquipaje2)} onChange={handleBaggageSelection}/>
                             </div>
                             <div style={divPesoEquiapajes} className="divOpcionesPesoEquipajes" onClick={seleccionarRadio}>
                                 <img src="/img/equipaje de bodega 1.png" alt="" style={imgOpcionesPesoEquipajes} className="imgOpcionesPesoEquipajes" />
                                 <label>Equipaje hasta 20kg $20000 </label>
                                 <br />
-                                <input type="radio" name="pesoEquipaje" onClick={handleBaggageSelection}/>
+                                <input type="radio" name="pesoEquipaje" value={JSON.stringify(valorEquipaje3)} onChange={handleBaggageSelection}/>
                             </div>
                         </form>
 
@@ -172,12 +171,12 @@ const Extras = () => {
                                 <div style={divOpcionesEquipajesEspeciales} className="divOpcionesEquipajesEspeciales" onClick={seleccionarRadio}>
                                     <img src="/img/equipaje especial.png" alt="" style={imgEquipajeEspecial} className="imgEquipajeEspecial" />
                                     <label>Equipaje especial $12500 </label>
-                                    <input type="radio" name="tipoDeEquipaje" />
+                                    <input type="radio" value={JSON.stringify(valorEquipajeEspecial)} name="tipoDeEquipaje" onChange={handleSpecialBaggageSelection}/>
                                 </div>
                                 <div style={divOpcionesEquipajesEspeciales} className="divOpcionesEquipajesEspeciales" onClick={seleccionarRadio}>
                                     <img src="/img/mascota en cabina.png" alt="" style={imgEquipajeEspecial} className="imgEquipajeEspecial" />
                                     <label>Mascota en cabina $15000 </label>
-                                    <input type="radio" name="tipoDeEquipaje" />
+                                    <input type="radio" name="tipoDeEquipaje" value={JSON.stringify(valorEquipajeEspecial2)} onChange={handleSpecialBaggageSelection}/>
                                 </div>
                             </form>
                         </div>

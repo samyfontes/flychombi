@@ -183,17 +183,19 @@ const MetodosDePago = () => {
                         </div>
                     </form>
                     <div style={mpStyle}>
-                        <p style={textoMPStyle}>
-                            <b>Para pagar con mercado pago:</b>
-                        </p>
-                        <button
-                            style={botonMPStyle}
-                            onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
-                            onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
-                        >
-                            Continuar hacia MP
-                        </button>
-                    </div>
+    <p style={textoMPStyle}>
+        <b>Para pagar con mercado pago:</b>
+    </p>
+    <button
+        style={botonMPStyle}
+        onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
+        onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
+        onClick={() => window.location.href = 'https://www.mercadopago.com'}
+    >
+        Continuar hacia MP
+    </button>
+</div>
+
                     <div style={datosDelUsuarioStyle}>
                         <button
                             style={botonContinuarStyle}

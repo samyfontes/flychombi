@@ -31,6 +31,7 @@ function App() {
           <Route path='/admin/vuelos' element={<AdminVuelos />} />
           <Route path='/admin/usuarios' element={<AdminUsuarios />} />
           <Route path='/metodos-de-pago' element={<MetodosDePago />}/>
+          <Route path="/results" element={<SearchResults />} />
         </Routes>
       </Layout>
     </Router>

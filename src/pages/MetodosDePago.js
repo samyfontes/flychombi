@@ -1,9 +1,12 @@
 import React from "react";
+import { useLocation } from 'react-router-dom';
 
 const MetodosDePago = () => {
 
     const globalStyle = {
         fontFamily: 'Arial, Helvetica, sans-serif',
+        minHeight: '100vh',
+        margin: '1%'
     };
 
     const containerStyle = {
@@ -17,6 +20,7 @@ const MetodosDePago = () => {
         flexDirection: 'column',
         flex: 2,
         padding: '20px',
+        height: 'auto',
     };
 
     const subtituloStyle = {
@@ -35,7 +39,6 @@ const MetodosDePago = () => {
         padding: '20px',
         borderRadius: '10px',
         marginBottom: '20px',
-        
     };
 
     const textoDerechaStyle = {
@@ -44,6 +47,7 @@ const MetodosDePago = () => {
         padding: '30px',
         marginLeft: '25px',
         flex: 1,
+        minHeight: 'auto',
     };
 
     const contenidoStyle = {
@@ -56,7 +60,6 @@ const MetodosDePago = () => {
         fontSize: '20px',
         listStyleType: 'none',
         height: '100%',
-        
     };
 
     const mpStyle = {
@@ -113,6 +116,11 @@ const MetodosDePago = () => {
         transform: 'scale(1.1)',
         transition: '.2s',
     };
+
+    const location = useLocation();
+    const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount, passengers, selectedBaggage, selectedEspecialBaggage } = location.state || {};
+
+    console.log(selectedBaggage, selectedEspecialBaggage);
 
     return (
         <div style={globalStyle}>
@@ -191,23 +199,45 @@ const MetodosDePago = () => {
                             style={botonContinuarStyle}
                             onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
                             onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
-                            
                         >
                             <b>Continuar</b>
                         </button>
                     </div>
                 </div>
                 <div style={textoDerechaStyle}>
-                    <ul style={contenidoStyle}>
-                        <li>Fecha:</li>
-                        <li>Lugar de ida:</li>
-                        <li>Lugar de vuelta:</li>
-                        <li>Horarios:</li>
-                        <li>Información del usuario:</li>
-                    </ul>
-                </div>
-            </section>
+                    <div style={{ height: '100%', backgroundColor: 'white', borderRadius: '20px', padding: '2.5%', fontSize: 'medium' }}>
+                        <h4 style={{ fontSize: 'medium' }}>RESUMEN DE VUELO</h4>
+                        <p>Origen: {selectedOrigin}</p>
+                        <p>Destino: {selectedDestination}</p>
+                        <p>Cantidad de pasajeros: {passengerCount}</p>
+                        {selectedOutboundFlight && <p>Precio del vuelo de ida: ${selectedOutboundFlight.flight_price}</p>}
+                        {selectedOutboundFlight && <p>Fecha del vuelo de ida: {selectedOutboundFlight.flight_date}</p>}
+                        {selectedReturnFlight && <p>Precio del vuelo de vuelta: ${selectedReturnFlight.flight_price}</p>}
+                        {selectedReturnFlight && <p>Fecha del vuelo de vuelta: {selectedReturnFlight.flight_date}</p>}
 
+                        {passengers && passengers.length > 0 && (
+                            <div>
+                                <h2>Información de los pasajeros:</h2>
+                                {passengers.map((passenger, index) => (
+                                    <div key={index}>
+                                        <h3>Pasajero {index + 1}</h3>
+                                        <p>Nombre: {passenger.name || 'No especificado'}</p>
+                                        <p>Fecha de nacimiento: {passenger.birthDate || 'No especificado'}</p>
+                                        <p>Documento: {passenger.document || 'No especificado'}</p>
+                                        <p>Género: {passenger.gender || 'No especificado'}</p>
+                                        {selectedBaggage && (
+                                            <p>Equipaje: {selectedBaggage.name || 'No especificado'} ${selectedBaggage.price || 'No especificado'}</p>
+                                        )}
+                                        {selectedEspecialBaggage && (
+                                            <p>Equipaje especial: {selectedEspecialBaggage.name || 'No especificado'} ${selectedEspecialBaggage.price || 'No especificado'}</p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>    
+            </section>
         </div>
     );
 };

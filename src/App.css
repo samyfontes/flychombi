@@ -348,7 +348,7 @@ ul{
   justify-content: space-between;
   align-items: flex-start;
   padding: 20px;
-  padding-left: 200px;
+  /* padding-left: 200px; */
   width: 90%;
   max-width: 1200px;
   }
@@ -390,14 +390,14 @@ ul{
       border-radius: 16px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      /* justify-content: center; */
+      align-items: self-start;
       font-size: 16px;
       margin-left: 50px;
-  }
-  .informacion-sobre-vuelo h1{
+      min-height: 67vh;
       padding: 20px;
   }
+  
   ::placeholder {
       font-size: 16px; 
       font-family: "Josefin Sans", sans-serif;
@@ -405,7 +405,7 @@ ul{
       text-align: center;
     }
 
-  .boton-continuar{
+  .boton-continuar, .boton-agregar-pasajero{
       font-family: "Josefin Sans", sans-serif;
       border-radius: 30px;
       font-size: 16px;
@@ -514,10 +514,12 @@ ul{
 
   @media only screen and (max-width: 600px) {
       .contenedor-principal{
-          padding: 10px;
+          padding-top: 20px;
+       
       }
       .informacion-sobre-vuelo{
-          padding-left: 0;
+          padding-left: 5px;
+          min-height: 59.5vh;
       }
       .titulo-pasajeros {
           font-size: 20px;
@@ -532,8 +534,8 @@ ul{
           font-size: 14px;
       }
   
-      .informacion-sobre-vuelo h1{
-          font-size: 20px;
+      .informacion-sobre-vuelo h2{
+          font-size: medium;
       }
   
       .boton-continuar {
@@ -543,7 +545,12 @@ ul{
   
   /* Pantallas medianas (tablets) */
   @media only screen and (min-width: 601px) and (max-width: 1024px) {
-      .titulo-pasajeros {
+    .contenedor-principal{
+      padding: 20px;
+      margin-left: 50px;
+  }  
+    
+    .titulo-pasajeros {
           font-size: 48px;
       }
   
@@ -557,7 +564,8 @@ ul{
       }
   
       .informacion-sobre-vuelo {
-          font-size: 10px;
+          font-size: medium;
+          min-height: 64vh;
       }
   
       .boton-continuar {
@@ -567,6 +575,11 @@ ul{
   
   /* Pantallas grandes (escritorio) */
   @media only screen and (min-width: 1025px) {
+      
+      .contenedor-principal{
+        padding-left: 200px;
+      }
+    
       .titulo-pasajeros {
           font-size: 64px;
       }

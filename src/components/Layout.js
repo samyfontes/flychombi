@@ -62,10 +62,6 @@ return (
                 </Link>
             </div>
             <nav style={navegacion}>
-                <Link to="/mireserva" style={link}>Mi Reserva</Link>
-                <Link to="/destinos" style={link}>Destinos</Link>
-                <Link to="/extras" style={link}>Extras</Link>
-                <Link to="/informacion-pasajeros" style={link}>Informacion Pasajeros</Link>
                 <Link to="/login" style={link}>Inicio Sesion</Link>
                 <Link to="/registro" style={link}>Registro</Link>
                 <button style={link} onClick={() => setModalOpen(true)}>Usuario</button>

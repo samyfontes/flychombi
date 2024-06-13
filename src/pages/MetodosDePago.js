@@ -1,7 +1,8 @@
 import React from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const MetodosDePago = () => {
+    const navigate = useNavigate();
 
     const globalStyle = {
         fontFamily: 'Arial, Helvetica, sans-serif',
@@ -120,7 +121,19 @@ const MetodosDePago = () => {
     const location = useLocation();
     const { selectedOutboundFlight, selectedReturnFlight, selectedOrigin, selectedDestination, passengerCount, passengers, selectedBaggage, selectedEspecialBaggage } = location.state || {};
 
+    // Calcular el costo total
+    const precioVueloIda = selectedOutboundFlight ? selectedOutboundFlight.flight_price : 0;
+    const precioVueloVuelta = selectedReturnFlight ? selectedReturnFlight.flight_price : 0;
+    const precioEquipaje = selectedBaggage ? selectedBaggage.price : 0;
+    const precioEquipajeEspecial = selectedEspecialBaggage ? selectedEspecialBaggage.price : 0;
+
+    const costoTotal = precioVueloIda + precioVueloVuelta + precioEquipaje + precioEquipajeEspecial;
+
     console.log(selectedBaggage, selectedEspecialBaggage);
+
+    const handlePagoClick = () => {
+        navigate('/confirmacion-compra', { state: { costoTotal } }); // Pasar costoTotal como parte del estado
+    };
 
     return (
         <div style={globalStyle}>
@@ -150,8 +163,6 @@ const MetodosDePago = () => {
                                 placeholder="Nombre del titular"
                                 required
                             />
-                        
-                        
                             <label htmlFor="documento"></label>
                             <input
                                 type="number"
@@ -169,7 +180,6 @@ const MetodosDePago = () => {
                                 name="FechaDeCaducidad"
                                 required
                             />
-                        
                             <label htmlFor="codigo"></label>
                             <input
                                 type="number"
@@ -183,20 +193,19 @@ const MetodosDePago = () => {
                         </div>
                     </form>
                     <div style={mpStyle}>
-    <p style={textoMPStyle}>
-        <b>Para pagar con mercado pago:</b>
-    </p>
-    <button
-        style={botonMPStyle}
-        onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
-        onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
-        onClick={() => window.location.href = 'https://www.mercadopago.com'}
-    >
-        Continuar hacia MP
-    </button>
-</div>
-
-                    <div style={datosDelUsuarioStyle}>
+                        <p style={textoMPStyle}>
+                            <b>METODOS DE PAGO</b>
+                        </p>
+                        <button
+                            style={botonMPStyle}
+                            onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
+                            onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
+                            onClick={() => window.location.href = 'https://www.mercadopago.com'}
+                        >
+                            Continuar hacia Mercado PAGO
+                        </button>
+                    </div>
+                    {/* <div style={datosDelUsuarioStyle}>  
                         <button
                             style={botonContinuarStyle}
                             onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
@@ -204,7 +213,7 @@ const MetodosDePago = () => {
                         >
                             <b>Continuar</b>
                         </button>
-                    </div>
+                </div> */}
                 </div>
                 <div style={textoDerechaStyle}>
                     <div style={{ height: '100%', backgroundColor: 'white', borderRadius: '20px', padding: '2.5%', fontSize: 'medium' }}>
@@ -216,7 +225,6 @@ const MetodosDePago = () => {
                         {selectedOutboundFlight && <p>Fecha del vuelo de ida: {selectedOutboundFlight.flight_date}</p>}
                         {selectedReturnFlight && <p>Precio del vuelo de vuelta: ${selectedReturnFlight.flight_price}</p>}
                         {selectedReturnFlight && <p>Fecha del vuelo de vuelta: {selectedReturnFlight.flight_date}</p>}
-
                         {passengers && passengers.length > 0 && (
                             <div>
                                 <h2>Información de los pasajeros:</h2>
@@ -227,16 +235,27 @@ const MetodosDePago = () => {
                                         <p>Fecha de nacimiento: {passenger.birthDate || 'No especificado'}</p>
                                         <p>Documento: {passenger.document || 'No especificado'}</p>
                                         <p>Género: {passenger.gender || 'No especificado'}</p>
-                                        {selectedBaggage && (
-                                            <p>Equipaje: {selectedBaggage.name || 'No especificado'} ${selectedBaggage.price || 'No especificado'}</p>
-                                        )}
-                                        {selectedEspecialBaggage && (
-                                            <p>Equipaje especial: {selectedEspecialBaggage.name || 'No especificado'} ${selectedEspecialBaggage.price || 'No especificado'}</p>
-                                        )}
                                     </div>
                                 ))}
                             </div>
                         )}
+                        {selectedBaggage && (
+                            <p>Equipaje: {selectedBaggage.name} - ${selectedBaggage.price}</p>
+                        )}
+                        {selectedEspecialBaggage && (
+                            <p>Equipaje especial: {selectedEspecialBaggage.name} - ${selectedEspecialBaggage.price}</p>
+                        )}
+                        <h3>Total: ${costoTotal}</h3>
+                        <div style={mpStyle}>
+                            <button
+                                style={botonMPStyle}
+                                onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
+                                onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
+                                onClick={handlePagoClick}
+                            >
+                                PAGAR
+                            </button>
+                        </div>
                     </div>
                 </div>    
             </section>

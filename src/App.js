@@ -1,3 +1,4 @@
+// App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
@@ -12,8 +13,8 @@ import Nosotros from './pages/Nosotros';
 import AdminVuelos from './pages/AdminVuelos';
 import AdminUsuarios from './pages/AdminUsuarios';
 import SearchResults from './pages/SearchResults';
-import ModalUsuario from './components/ModalUsuario';
 import MetodosDePago from './pages/MetodosDePago';
+import ConfirmacionCompra from './pages/ConfirmacionCompra';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path='/admin/usuarios' element={<AdminUsuarios />} />
           <Route path='/metodos-de-pago' element={<MetodosDePago />}/>
           <Route path="/results" element={<SearchResults />} />
+          <Route path="/confirmacion-compra" element={<ConfirmacionCompra />} />
         </Routes>
       </Layout>
     </Router>

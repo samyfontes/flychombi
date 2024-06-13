@@ -11,6 +11,7 @@ import AdminVuelos from './pages/AdminVuelos';
 import AdminUsuarios from './pages/AdminUsuarios';
 import SearchResults from './pages/SearchResults';
 import MetodosDePago from './pages/MetodosDePago';
+import './App.css'; 
 
 function App() {
   return (

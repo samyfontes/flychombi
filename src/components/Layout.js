@@ -4,6 +4,7 @@ import { auth, admin, db } from '../firebase'; // Ensure this path is correct
 import './Layout.css'; // Ensure this path is correct
 import ModalUsuario from './ModalUsuario';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import { Menu, MenuItem } from '@mui/material';
 
 const Layout = ({ children }) => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -11,6 +12,14 @@ const Layout = ({ children }) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [error, setError] = useState(null);
     const [userData, setUserData] = useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     useEffect(() => {
 
@@ -18,6 +27,7 @@ const Layout = ({ children }) => {
             if (user) {
                 setUser(user);
                 fetchUserData(user);
+                console.log("User:", user.email);
                 try {
                     // Call your Firebase Function to check if user is admin
                     const response = await fetch('https://us-central1-flychombi.cloudfunctions.net/checkAdmin', {
@@ -115,7 +125,20 @@ const Layout = ({ children }) => {
                                 setModalOpen(true)
                             }}>Usuario</button>
                             {isAdmin && (
-                                <Link to="/admin/vuelos" style={link}>Admin</Link>
+                                <>
+                                <button id="basic-button" aria-controls="basic-menu" aria-haspopup="true" onClick={handleClick} style={link}>Admin</button>
+                                <Menu id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    MenuListProps={{
+                                        'aria-labelledby': 'basic-button',
+                                    }}>
+                                    <MenuItem><Link to='/admin/vuelos'>Admin vuelos</Link></MenuItem>
+                                    <MenuItem><Link to='/admin/usuarios'>Admin usuarios</Link></MenuItem>
+                                </Menu>
+                                </>
+                                // <Link to="/admin/vuelos" style={link}>Admin</Link>
                             )}
                         </>
                     )}

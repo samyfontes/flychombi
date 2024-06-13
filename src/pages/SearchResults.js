@@ -122,7 +122,21 @@ const SearchResults = () => {
             setErrorMessage('Por favor seleccione los vuelos de ida y vuelta.');
         }
     };
-    
+
+    useEffect(() => {
+        // Automatically redirect when both flights are selected
+        if (selectedOutboundFlight && (tripType === 'one-way' || (tripType === 'round-trip' && selectedReturnFlight))) {
+            navigate('/informacion-pasajeros', {
+                state: {
+                    selectedOutboundFlight,
+                    selectedReturnFlight,
+                    selectedOrigin,
+                    selectedDestination,
+                    passengerCount
+                }
+            });
+        }
+    }, [selectedOutboundFlight, selectedReturnFlight]);
 
     return (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '180px', minHeight: '100vh'}}>
@@ -167,14 +181,14 @@ const SearchResults = () => {
             )}
 
             <div style={{ gridColumn: '1 / -1', textAlign: 'center', }}>
-            {(selectedOutboundFlight && (tripType === 'one-way' || (tripType === 'round-trip' && selectedReturnFlight))) && (
-                <button style={{backgroundColor: '#ffa800',
-                    width: '60%',
-                    height: '40px',
-                    borderRadius: '50px',
-                    fontSize: 'medium',
-                    cursor: 'pointer'}} ref={buttonRef} onClick={handleConfirmSelection}>Confirmar selección de vuelos</button>
-            )}
+                {(selectedOutboundFlight && (tripType === 'one-way' || (tripType === 'round-trip' && selectedReturnFlight))) && (
+                    <button style={{backgroundColor: '#ffa800',
+                        width: '60%',
+                        height: '40px',
+                        borderRadius: '50px',
+                        fontSize: 'medium',
+                        cursor: 'pointer'}} ref={buttonRef} onClick={handleConfirmSelection}>Confirmar selección de vuelos</button>
+                )}
             </div>
 
             {errorMessage && <p>{errorMessage}</p>}

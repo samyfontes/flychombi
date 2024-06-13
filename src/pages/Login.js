@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../firebase'; // Ensure this path is correct
 import '../App.css';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -9,11 +11,19 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // handle login logic here
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            // Redirect or handle success as needed
+            console.log("User logged in:", user.uid);
+            navigate('/'); // Example: Redirect to home page after successful login
+        } catch (error) {
+            console.error("Error signing in:", error.message);
+            // Handle error (show message, etc.)
+        }
     };
 
-    const divFormulario={
-
+    const divFormulario = {
         width: '90%',
         maxWidth: '400px',
         textAlign: 'center',
@@ -21,13 +31,13 @@ const Login = () => {
         border: '1px solid black',
         backgroundColor: 'rgb(255, 255, 255)',
         padding: '3%',
+    };
 
-    }
-    const formRegistro={
+    const formRegistro = {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-    }
+    };
 
     return (
         <section className="sectionLogin">

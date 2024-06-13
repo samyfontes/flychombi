@@ -6,8 +6,8 @@ import axios from 'axios';
 
 const AdminVuelos = () => {
     const containerStyle = {
-        width: "100%",
-        maxWidth: "1200px",
+        width: "100%",  // Full width
+        maxWidth: "1200px",  // Maximum width for larger screens
         margin: "0 auto",
         padding: "20px",
         backgroundColor: "#faebd7",
@@ -18,7 +18,8 @@ const AdminVuelos = () => {
     const tableStyle = {
         width: "100%",
         borderCollapse: "collapse",
-        marginTop: "20px"
+        marginTop: "20px",
+        overflowX: "auto",  // Allow horizontal scrolling on smaller screens
     };
 
     const thStyle = {
@@ -40,7 +41,8 @@ const AdminVuelos = () => {
         border: "none",
         borderRadius: "5px",
         color: "black",
-        padding: "10px 20px",
+        padding: "7px 12px",
+        margin: "8px",
         cursor: "pointer",
         transition: "transform 0.2s"
     };
@@ -65,12 +67,14 @@ const AdminVuelos = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: "80%",  // Adjust width for smaller screens
+        maxWidth: 400,  // Maximum width
         backgroundColor: 'white',
         border: '2px solid #000',
-        boxShadow: 24,
+        boxShadow: "24px",
         padding: 4,
     };
+    
 
     const [allFlights, setAllFlights] = useState([]);
     const [currentPageFlights, setCurrentPageFlights] = useState([]);
@@ -213,7 +217,26 @@ const AdminVuelos = () => {
 
     const handleUpdateFlight = async (flightId, flightData) => {
         try {
-            const response = await axios.post('https://us-central1-flychombi.cloudfunctions.net/updateFlight', { id: flightId, ...flightData });
+            // Retrieve the current flight from allFlights state
+            const currentFlight = allFlights.find(flight => flight.id === flightId);
+            console.log(currentFlight);
+            console.log(flightData);
+            
+            // Merge updated fields with current flight data
+            const updatedFields = {
+                flight_origin: flightData.origin || currentFlight.flight_origin,
+                flight_destination: flightData.destination || currentFlight.flight_destination,
+                flight_date: flightData.date || currentFlight.flight_date,
+                flight_availability: flightData.availability || currentFlight.flight_availability,
+                flight_price: flightData.price || currentFlight.flight_price
+            };
+
+            console.log(updatedFields);
+    
+            const response = await axios.post('https://us-central1-flychombi.cloudfunctions.net/updateFlight', {
+                id: flightId,
+                ...updatedFields
+            });
             console.log(response.data);
             fetchAllFlights();
             handleCloseModal();
@@ -362,29 +385,10 @@ const AdminVuelos = () => {
                                 InputLabelProps={{ shrink: true }}
                             />
                             <TextField
-                                label="Hora"
-                                name="time"
-                                type="time"
-                                value={updatedFlight.time}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{ shrink: true }}
-                            />
-                            <TextField
                                 label="Disponibilidad"
                                 name="availability"
                                 type="number"
                                 value={updatedFlight.availability}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Capacidad Total"
-                                name="totalSeats"
-                                type="number"
-                                value={updatedFlight.totalSeats}
                                 onChange={handleUpdateInputChange}
                                 fullWidth
                                 margin="normal"

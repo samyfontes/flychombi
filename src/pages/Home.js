@@ -1,5 +1,5 @@
 // Home.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
@@ -13,9 +13,14 @@ const Home = () => {
     const [tripType, setTripType] = useState('one-way');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const carouselRef = useRef(null);
 
     useEffect(() => {
         fetchFlightData();
+        startCarousel();
+        return () => {
+            stopCarousel();
+        };
     }, []);
 
     const fetchFlightData = async () => {
@@ -76,8 +81,38 @@ const Home = () => {
         }
     }
 
+
+    const startCarousel = () => {
+        const interval = setInterval(() => {
+            if (carouselRef.current) {
+                const carousel = carouselRef.current;
+                carousel.style.transition = "transform 0.4s ease-in-out";
+                carousel.style.transform = `translateX(-${carousel.clientWidth}px)`;
+
+                setTimeout(() => {
+                    carousel.style.transition = "none";
+                    carousel.style.transform = "translateX(0)";
+                }, 4000); // Adjust the interval duration (4000 milliseconds = 4 seconds)
+            }
+        }, 5000); // Adjust the interval duration (5000 milliseconds = 5 seconds)
+
+        return () => clearInterval(interval);
+    }
+
+    const stopCarousel = () => {
+        clearInterval(startCarousel);
+    }
+
     return (
         <div style={{ minHeight: '100vh' }}>
+            <div className="slider-box">
+                <ul ref={carouselRef} className="carousel">
+                    <li><img src="img/s1.jpg" alt="" /></li>
+                    <li><img src="img/s2.jpg" alt="" /></li>
+                    <li><img src="img/s3.jpg" alt="" /></li>
+                    <li><img src="img/s4.jpg" alt="" /></li>
+                </ul>
+            </div>
             <div className="button-container">
                 <div className="btn-group" role="group" aria-label="Trip type">
                     <button type="button" className={`btn btn-primary ${tripType === 'one-way' ? 'active' : ''}`} onClick={() => setTripType('one-way')}>Solo ida</button>
@@ -102,14 +137,14 @@ const Home = () => {
                     </select>
                 </div>
                 <div>
-                    <input 
-                        type="number" 
-                        className="form-control" 
-                        id="select-passenger-count" 
-                        aria-label="Select passenger count" 
-                        value={passengerCount} 
-                        min="1" 
-                        onChange={(e) => setPassengerCount(Number(e.target.value))} 
+                    <input
+                        type="number"
+                        className="form-control"
+                        id="select-passenger-count"
+                        aria-label="Select passenger count"
+                        value={passengerCount}
+                        min="1"
+                        onChange={(e) => setPassengerCount(Number(e.target.value))}
                     />
                 </div>
                 <button className="btn btn-success" onClick={handleSearch}>Buscar vuelos</button>

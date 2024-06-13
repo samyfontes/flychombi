@@ -1,4 +1,3 @@
-// Home.js
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
@@ -18,8 +17,14 @@ const Home = () => {
     useEffect(() => {
         fetchFlightData();
         startCarousel();
+        // Add event listeners to disable scrolling during carousel animation
+        window.addEventListener('wheel', disableScroll);
+        window.addEventListener('touchmove', disableScroll);
         return () => {
             stopCarousel();
+            // Remove event listeners on component unmount
+            window.removeEventListener('wheel', disableScroll);
+            window.removeEventListener('touchmove', disableScroll);
         };
     }, []);
 
@@ -42,6 +47,10 @@ const Home = () => {
         } catch (error) {
             console.error('Error fetching flights:', error);
         }
+    }
+
+    const disableScroll = (event) => {
+        event.preventDefault();
     }
 
     const handleSearch = async () => {
@@ -80,7 +89,6 @@ const Home = () => {
             console.error('Error fetching flights:', error);
         }
     }
-
 
     const startCarousel = () => {
         const interval = setInterval(() => {

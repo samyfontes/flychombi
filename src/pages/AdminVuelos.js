@@ -213,7 +213,26 @@ const AdminVuelos = () => {
 
     const handleUpdateFlight = async (flightId, flightData) => {
         try {
-            const response = await axios.post('https://us-central1-flychombi.cloudfunctions.net/updateFlight', { id: flightId, ...flightData });
+            // Retrieve the current flight from allFlights state
+            const currentFlight = allFlights.find(flight => flight.id === flightId);
+            console.log(currentFlight);
+            console.log(flightData);
+            
+            // Merge updated fields with current flight data
+            const updatedFields = {
+                flight_origin: flightData.origin || currentFlight.flight_origin,
+                flight_destination: flightData.destination || currentFlight.flight_destination,
+                flight_date: flightData.date || currentFlight.flight_date,
+                flight_availability: flightData.availability || currentFlight.flight_availability,
+                flight_price: flightData.price || currentFlight.flight_price
+            };
+
+            console.log(updatedFields);
+    
+            const response = await axios.post('https://us-central1-flychombi.cloudfunctions.net/updateFlight', {
+                id: flightId,
+                ...updatedFields
+            });
             console.log(response.data);
             fetchAllFlights();
             handleCloseModal();
@@ -362,29 +381,10 @@ const AdminVuelos = () => {
                                 InputLabelProps={{ shrink: true }}
                             />
                             <TextField
-                                label="Hora"
-                                name="time"
-                                type="time"
-                                value={updatedFlight.time}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{ shrink: true }}
-                            />
-                            <TextField
                                 label="Disponibilidad"
                                 name="availability"
                                 type="number"
                                 value={updatedFlight.availability}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Capacidad Total"
-                                name="totalSeats"
-                                type="number"
-                                value={updatedFlight.totalSeats}
                                 onChange={handleUpdateInputChange}
                                 fullWidth
                                 margin="normal"

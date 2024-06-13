@@ -40,7 +40,8 @@ const AdminUsuarios = () => {
         border: "none",
         borderRadius: "5px",
         color: "black",
-        padding: "10px 20px",
+        padding: "7px 12px",
+        margin: "8px",
         cursor: "pointer",
         transition: "transform 0.2s"
     };

@@ -6,8 +6,8 @@ import axios from 'axios';
 
 const AdminVuelos = () => {
     const containerStyle = {
-        width: "100%",
-        maxWidth: "1200px",
+        width: "100%",  // Full width
+        maxWidth: "1200px",  // Maximum width for larger screens
         margin: "0 auto",
         padding: "20px",
         backgroundColor: "#faebd7",
@@ -18,7 +18,8 @@ const AdminVuelos = () => {
     const tableStyle = {
         width: "100%",
         borderCollapse: "collapse",
-        marginTop: "20px"
+        marginTop: "20px",
+        overflowX: "auto",  // Allow horizontal scrolling on smaller screens
     };
 
     const thStyle = {
@@ -40,7 +41,8 @@ const AdminVuelos = () => {
         border: "none",
         borderRadius: "5px",
         color: "black",
-        padding: "10px 20px",
+        padding: "7px 12px",
+        margin: "8px",
         cursor: "pointer",
         transition: "transform 0.2s"
     };
@@ -65,12 +67,14 @@ const AdminVuelos = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: "80%",  // Adjust width for smaller screens
+        maxWidth: 400,  // Maximum width
         backgroundColor: 'white',
         border: '2px solid #000',
-        boxShadow: 24,
+        boxShadow: "24px",
         padding: 4,
     };
+    
 
     const [allFlights, setAllFlights] = useState([]);
     const [currentPageFlights, setCurrentPageFlights] = useState([]);

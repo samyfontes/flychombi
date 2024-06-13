@@ -1,0 +1,603 @@
+/* General Reset */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* General Styles */
+header {
+  background-color: white;
+  width: 100%;
+  padding: 5px;
+  position: sticky; /* Fix the header at the top */
+  top: 0; /* Align the header to the top */
+  left: 0; /* Align the header to the left */
+  z-index: 1000; /* Ensure the header is above other elements */
+  height: 60px; /* Set a specific height for the header */
+}
+
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.logoFlyChombi {
+  height: auto;
+  width: 150px;
+  text-decoration: none;
+}
+
+.botonVolver {
+  margin: 20px 100px;
+  width: 85px;
+  background-color: #ffa800;
+  text-align: center;
+  border-radius: 50px;
+  padding: 10px 20px 15px;
+  text-decoration: none;
+  font-size: large;
+  color: black;
+  float: right;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.botonVolver:hover {
+  background-color: #ffa800;
+  transform: scale(1.1);
+  box-shadow: 5px 5px 10px rgb(49, 49, 49);
+}
+
+.botonVolver .flechaVolver {
+  width: 20%;
+  height: 10%;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
+.sectionLogin {
+  background-position: center;
+  align-items: center;
+  text-align: center;
+  height: 80vh;
+  width: 100%;
+  background-color: #ffa800;
+  display: flex;
+  justify-content: center;
+  box-shadow: #4F4C4D;
+  margin-top: auto;
+}
+
+.inputRegistro {
+  margin: 2% 0;
+  width: 100%;
+  outline: none;
+  height: 30px;
+  border-style: none;
+  border-bottom: 2px solid black;
+  text-align: center;
+  font-size: medium;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.inputRegistro:hover,
+.inputRegistro:focus {
+  border-color: #ffa800;
+  transition: .2s;
+}
+
+.botonRegistrar {
+  width: 100%;
+  height: 40px;
+  font-size: medium;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px 0 0;
+  background-color: #ffa800;
+  color: black;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.botonRegistrar:hover {
+  transition: .2s;
+  transform: scale(1.1);
+  background-color: #d78f00;
+}
+/* Login Section */
+.login {
+  width: 100vw; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 0; 
+  padding: 20px;
+  box-sizing: border-box; 
+  height: 100vh; 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.login form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 20px 0;
+}
+
+.login input {
+  margin: 10px 0;
+  padding: 10px;
+  font-size: medium;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login button {
+  padding: 10px;
+  font-size: medium;
+  background-color: #ffa800;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.login button:hover {
+  background-color: #d78f00;
+  transform: scale(1.1);
+}
+
+
+/*---- Info pasajeros -----*/
+
+.div-info-pasajeroros{
+  width: 100%;
+  padding: 10px;
+}
+
+
+/* Footer */
+footer {
+  background-color: #4F4C4D;
+  height: 12vh;
+  text-align: center;
+  display: flex;
+  margin: auto;
+}
+
+.divFooter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.parrafoFooter {
+  padding: 5px;
+  color: #ffa800;
+  font-size: medium;
+}
+
+.parrafoFooter, h3 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: #ffa800;
+  font-size: medium;
+}
+
+/* Additional Styles from styles.css */
+/* .divBody {
+  display: flex;
+  flex-direction: row;
+} */
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 2;
+}
+
+
+.divOpcionesPesoEquipajes:hover, .divOpcionesEquipajesEspeciales:hover {
+  transform: scale(1.1);
+  transition-duration: .2s;
+  box-shadow: 5px 5px 10px rgb(49, 49, 49);
+}
+
+.divOpcionesPesoEquipajes label, .divOpcionesEquipajesEspeciales label {
+  cursor: pointer;
+  font-size: medium;
+}
+
+.divOpcionesEquipajesEspeciales label {
+  margin: auto;
+}
+
+
+#btnContinuar:hover {
+  transform: scale(1.1);
+  transition-duration: .2s;
+  box-shadow: 5px 5px 10px rgb(49, 49, 49);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu {
+    flex-direction: column;
+  }
+
+  .botonVolver {
+    margin-top: 20px;
+  }
+
+  .divBody {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .divFormulario {
+    width: 80%;
+  }
+
+  main {
+    width: 100%;
+    align-items: center;
+  }
+
+  .formPesoEquipajes {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .imgOpcionesPesoEquipajes {
+    margin: auto;
+  }
+
+  .equipajeEspecial {
+    width: 100%;
+  }
+
+  .divOpcionesPesoEquipajes label, .divOpcionesEquipajesEspeciales label {
+    font-size: small;
+  }
+
+  .divOpcionesPesoEquipajes:hover, .divOpcionesEquipajesEspeciales:hover {
+    transform: scale(1);
+    box-shadow: 0px 0px 0px;
+  }
+
+  #btnContinuar:hover {
+    transform: scale(1);
+    box-shadow: 0px 0px 0px rgb(49, 49, 49);
+  }
+
+  .seccionEquipaje {
+    width: 80%;
+    margin: 20px auto 30px auto;
+  }
+
+  footer {
+    display: flex;
+    height: 12vh;
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .divBody {
+    margin-left: 0;
+  }
+  
+  .divFormulario {
+    width: 90%;
+  }
+
+  .divEquipajes {
+    width: auto;
+  }
+}
+
+
+
+.main {
+  width: 100%; /* Occupy full width */
+}
+
+ul{
+  list-style: none;
+}
+
+.volver{
+  color: black;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/*Encabezado*/
+.seccion-titulo-pasajeros{
+  padding-left: 70px;
+  padding-right: 70px;
+  align-items: center;
+  text-align: center;
+}
+.titulo-pasajeros{
+  align-items: center;
+  padding:30px;
+  background-color: #FDBE0F;
+  font-size: 24px;
+  border-radius:16px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+/*Formularios*/
+.contenedor-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  /* padding-left: 200px; */
+  width: 90%;
+  max-width: 1200px;
+  }
+
+  .formulario-pasajeros{
+
+      background-color: #FDBE0F;
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+  }
+  .formulario-pasajeros label {
+      font-size: 16px;
+      color: #333333;
+      margin-bottom: 5px;
+  }
+  
+
+  .formulario-pasajeros label, .informacion-sobre-vuelo h1 {
+      color: #333333;
+      margin-bottom: 10px;
+  }
+  .formulario-pasajeros input, .formulario-pasajeros select {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: none;
+      background-color: #FDBE0F;
+      border-bottom: 4px solid #000000;
+  }
+  
+  .informacion-sobre-vuelo{
+
+      background-color: #FDBE0F;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      /* justify-content: center; */
+      align-items: self-start;
+      font-size: 16px;
+      margin-left: 50px;
+      min-height: 67vh;
+      padding: 20px;
+  }
+  
+  ::placeholder {
+      font-size: 16px; 
+      font-family: "Josefin Sans", sans-serif;
+      color: #000000;
+      text-align: center;
+    }
+
+  .boton-continuar, .boton-agregar-pasajero{
+      font-family: "Josefin Sans", sans-serif;
+      border-radius: 30px;
+      font-size: 16px;
+      font-family: "Josefin Sans";
+      font-weight:normal;
+      padding: 15px;
+      border: none;
+      cursor: pointer;
+  }
+
+
+  /* Layout.css */
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal {
+      display: none; 
+      position: fixed; 
+      z-index: 1; 
+      padding-top: 200px; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%; 
+      border-radius: 10px;
+      padding: 20px;
+      overflow: auto; 
+      background-color: #fdbe0f;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    }
+    
+    /* Ventana o caja modal */
+    .contenido-modal {
+      position: relative; 
+      background-color: white;
+      margin: auto; 
+      padding: 20px;
+      width: 60%;
+      -webkit-animation-name: animarsuperior;
+      -webkit-animation-duration: 0.5s;
+      animation-name: animarsuperior;
+      animation-duration: 0.5s
+    }
+
+    footer{
+      background-color: rgb(39, 29, 26);
+      width: 100%;
+      height: 12vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color:  rgb(241, 174, 30);
+      
+  }
+  
+  footer .footer-text{
+      width: 90%;
+      height: 12vh;
+      display: flex;
+      flex-direction: row;
+      justify-content:left;
+      align-items: center;
+  }
+  
+  footer .box1{
+      width: 40%;
+      height: 12vh;
+      display: flex;
+      flex-direction: column;
+      padding-right: 55px;
+  }
+  
+  footer .box1 h3{
+      font-size: 15px;
+      margin: 10px 0;
+  }
+  footer .box1 p {
+      font-size: 10px;
+  }
+  footer .rs {
+      width: 100%;
+      height: 12vh;
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      align-items:center;
+      margin: 25px 0;
+  }
+  footer .rs img {
+      object-fit: cover;
+      height: 12;
+      margin-right: 15px;
+  }
+
+  @media only screen and (max-width: 600px) {
+      .contenedor-principal{
+          padding-top: 20px;
+       
+      }
+      .informacion-sobre-vuelo{
+          padding-left: 5px;
+          min-height: 59.5vh;
+      }
+      .titulo-pasajeros {
+          font-size: 20px;
+      }
+  
+      .formulario-pasajeros label {
+          font-size: 14px;
+      }
+  
+      .formulario-pasajeros input,
+      .formulario-pasajeros select {
+          font-size: 14px;
+      }
+  
+      .informacion-sobre-vuelo h2{
+          font-size: medium;
+      }
+  
+      .boton-continuar {
+          font-size: 14px;
+      }
+  }
+  
+  /* Pantallas medianas (tablets) */
+  @media only screen and (min-width: 601px) and (max-width: 1024px) {
+    .contenedor-principal{
+      padding: 20px;
+      margin-left: 50px;
+  }  
+    
+    .titulo-pasajeros {
+          font-size: 48px;
+      }
+  
+      .formulario-pasajeros label {
+          font-size: 18px;
+      }
+  
+      .formulario-pasajeros input,
+      .formulario-pasajeros select {
+          font-size: 18px;
+      }
+  
+      .informacion-sobre-vuelo {
+          font-size: medium;
+          min-height: 64vh;
+      }
+  
+      .boton-continuar {
+          font-size: 18px;
+      }
+  }
+  
+  /* Pantallas grandes (escritorio) */
+  @media only screen and (min-width: 1025px) {
+      
+      .contenedor-principal{
+        padding-left: 200px;
+      }
+    
+      .titulo-pasajeros {
+          font-size: 64px;
+      }
+  
+      .formulario-pasajeros label {
+          font-size: 20px;
+      }
+  
+      .formulario-pasajeros input,
+      .formulario-pasajeros select {
+          font-size: 20px;
+      }
+  
+      .informacion-sobre-vuelo {
+          font-size: 20px;
+      }
+  
+      .boton-continuar {
+          font-size: 20px;
+      }
+  }

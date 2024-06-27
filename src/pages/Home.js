@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
+import { set } from 'firebase/database';
+import dataset from '../dataset.json';
 
 const Home = () => {
     const [origins, setOrigins] = useState([]);
@@ -11,8 +13,10 @@ const Home = () => {
     const [passengerCount, setPassengerCount] = useState(1);
     const [tripType, setTripType] = useState('one-way');
     const [errorMessage, setErrorMessage] = useState('');
+    const [flightData, setFlightData] = useState([]);
     const navigate = useNavigate();
     const carouselRef = useRef(null);
+
 
     useEffect(() => {
         fetchFlightData();
@@ -29,24 +33,46 @@ const Home = () => {
     }, []);
 
     const fetchFlightData = async () => {
-        try {
-            const q = query(collection(db, "flights"));
-            const querySnapshot = await getDocs(q);
-            const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        //here we read the file dataset.json and we get the data from the array flights
+        setFlightData(dataset);
 
-            const originSet = new Set();
-            const destinationSet = new Set();
+        console.log('flights:', flightData);
 
-            flightData.forEach(flight => {
-                originSet.add(flight.flight_origin);
-                destinationSet.add(flight.flight_destination);
-            });
+        const originSet = new Set();
+        const destinationSet = new Set();
+        flightData.forEach(flight => {
+            originSet.add(flight.flight_origin);
+            destinationSet.add(flight.flight_destination);
+        });
+        setOrigins([...originSet]);
+        setDestinations([...destinationSet]);
 
-            setOrigins([...originSet]);
-            setDestinations([...destinationSet]);
-        } catch (error) {
-            console.error('Error fetching flights:', error);
-        }
+        console.log('flights:', flightData);
+        console.log('origins:', origins);
+        console.log('destinations:', destinations);
+
+        // console.log('flightData:', flightData);
+        // console.log('origins:', origins);
+        // console.log('destinations:', destinations);
+
+        // try {
+        //     const q = query(collection(db, "flights"));
+        //     const querySnapshot = await getDocs(q);
+        //     const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        //     const originSet = new Set();
+        //     const destinationSet = new Set();
+
+        //     flightData.forEach(flight => {
+        //         originSet.add(flight.flight_origin);
+        //         destinationSet.add(flight.flight_destination);
+        //     });
+
+        //     setOrigins([...originSet]);
+        //     setDestinations([...destinationSet]);
+        // } catch (error) {
+        //     console.error('Error fetching flights:', error);
+        // }
     }
 
     const disableScroll = (event) => {
@@ -60,9 +86,9 @@ const Home = () => {
         }
 
         try {
-            const q = query(collection(db, "flights"));
-            const querySnapshot = await getDocs(q);
-            const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            // const q = query(collection(db, "flights"));
+            // const querySnapshot = await getDocs(q);
+            // const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
             const filteredFlights = flightData.filter(flight =>
                 flight.flight_origin === selectedOrigin &&

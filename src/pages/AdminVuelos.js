@@ -3,6 +3,7 @@ import { db } from '../firebase';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { Button, Box, Typography, Modal, TextField } from "@mui/material";
 import axios from 'axios';
+import dataset from '../dataset.json';
 
 const AdminVuelos = () => {
     const containerStyle = {
@@ -115,16 +116,21 @@ const AdminVuelos = () => {
 
     const fetchAllFlights = async () => {
         setLoading(true);
-        try {
-            const flightsRef = collection(db, "flights");
-            const q = query(flightsRef, orderBy("flight_date"));
-            const querySnapshot = await getDocs(q);
-            const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            console.log(flightData);
-            setAllFlights(flightData);
-        } catch (error) {
-            console.error('Error fetching flights:', error);
-        }
+
+        setAllFlights(dataset);
+
+
+
+        // try {
+        //     const flightsRef = collection(db, "flights");
+        //     const q = query(flightsRef, orderBy("flight_date"));
+        //     const querySnapshot = await getDocs(q);
+        //     const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        //     console.log(flightData);
+        //     setAllFlights(flightData);
+        // } catch (error) {
+        //     console.error('Error fetching flights:', error);
+        // }
         setLoading(false);
     };
 

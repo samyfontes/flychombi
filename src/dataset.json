@@ -1,3 +1,5 @@
+{
+"flights":
 [
     {
     "flight_origin": "COR",
@@ -204847,3 +204849,4 @@
     "flight_destination": "COR"
     }
     ]
+}

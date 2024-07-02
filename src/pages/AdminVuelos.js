@@ -6,6 +6,9 @@ import axios from 'axios';
 import dataset from '../dataset.json';
 
 const AdminVuelos = () => {
+    const mainContainer ={
+        minHeight: "100vh"
+    };
     const containerStyle = {
         width: "100%",  // Full width
         maxWidth: "1200px",  // Maximum width for larger screens
@@ -252,176 +255,178 @@ const AdminVuelos = () => {
     };
 
     return (
-        <div style={containerStyle}>
-            <h1 style={headerStyle}>Administrar Vuelos</h1>
-            <button
-                style={{ ...buttonStyle, marginTop: "20px" }}
-                onClick={handleOpenCreateModal}
-            >
-                Agregar Vuelo
-            </button>
-            <Modal
-                open={createModalOpen}
-                onClose={handleCloseCreateModal}
-                aria-labelledby="create-flight-modal-title"
-                aria-describedby="create-flight-modal-description"
-            >
-                <Box sx={modalBoxStyle}>
-                    <Typography id="create-flight-modal-title" variant="h6" component="h2">
-                        Agregar Vuelo
-                    </Typography>
-                    <TextField
-                        label="Origen"
-                        name="flight_origin"
-                        value={newFlight.flight_origin}
-                        onChange={handleInputChange}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Destino"
-                        name="flight_destination"
-                        value={newFlight.flight_destination}
-                        onChange={handleInputChange}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Fecha"
-                        name="flight_date"
-                        type="date"
-                        value={newFlight.flight_date}
-                        onChange={handleInputChange}
-                        fullWidth
-                        margin="normal"
-                        InputLabelProps={{ shrink: true }}
-                    />
-                    <TextField
-                        label="Precio"
-                        name="flight_price"
-                        type="number"
-                        value={newFlight.flight_price}
-                        onChange={handleInputChange}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <Button onClick={() => handleCreateFlight(newFlight)}>Agregar</Button>
-                </Box>
-            </Modal>
-            <table style={tableStyle}>
-                <thead>
-                    <tr>
-                        <th style={thStyle}>Origen</th>
-                        <th style={thStyle}>Destino</th>
-                        <th style={thStyle}>Fecha</th>
-                        <th style={thStyle}>Disponibilidad</th>
-                        <th style={thStyle}>Capacidad Total</th>
-                        <th style={thStyle}>Precio</th>
-                        <th style={thStyle}>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentPageFlights.map(flight => (
-                        <tr key={flight.id}>
-                            <td style={tdStyle}>{flight.flight_origin}</td>
-                            <td style={tdStyle}>{flight.flight_destination}</td>
-                            <td style={tdStyle}>{flight.flight_date}</td>
-                            <td style={tdStyle}>{flight.flight_availability}</td>
-                            <td style={tdStyle}>{flight.flight_seats?.length || 0}</td>
-                            <td style={tdStyle}>{flight.flight_price}</td>
-                            <td style={tdStyle}>
-                                <button
-                                    style={buttonStyle}
-                                    onClick={() => handleOpenModal(flight, "modificar")}
-                                >
-                                    Modificar
-                                </button>
-                                <button
-                                    style={{ ...buttonStyle, ...buttonHoverStyle }}
-                                    onClick={() => handleOpenModal(flight, "eliminar")}
-                                >
-                                    Eliminar
-                                </button>
-                            </td>
+        <div style={mainContainer}>
+            <div style={containerStyle}>
+                <h1 style={headerStyle}>Administrar Vuelos</h1>
+                <button
+                    style={{ ...buttonStyle, marginTop: "20px" }}
+                    onClick={handleOpenCreateModal}
+                >
+                    Agregar Vuelo
+                </button>
+                <Modal
+                    open={createModalOpen}
+                    onClose={handleCloseCreateModal}
+                    aria-labelledby="create-flight-modal-title"
+                    aria-describedby="create-flight-modal-description"
+                >
+                    <Box sx={modalBoxStyle}>
+                        <Typography id="create-flight-modal-title" variant="h6" component="h2">
+                            Agregar Vuelo
+                        </Typography>
+                        <TextField
+                            label="Origen"
+                            name="flight_origin"
+                            value={newFlight.flight_origin}
+                            onChange={handleInputChange}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            label="Destino"
+                            name="flight_destination"
+                            value={newFlight.flight_destination}
+                            onChange={handleInputChange}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            label="Fecha"
+                            name="flight_date"
+                            type="date"
+                            value={newFlight.flight_date}
+                            onChange={handleInputChange}
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{ shrink: true }}
+                        />
+                        <TextField
+                            label="Precio"
+                            name="flight_price"
+                            type="number"
+                            value={newFlight.flight_price}
+                            onChange={handleInputChange}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <Button onClick={() => handleCreateFlight(newFlight)}>Agregar</Button>
+                    </Box>
+                </Modal>
+                <table style={tableStyle}>
+                    <thead>
+                        <tr>
+                            <th style={thStyle}>Origen</th>
+                            <th style={thStyle}>Destino</th>
+                            <th style={thStyle}>Fecha</th>
+                            <th style={thStyle}>Disponibilidad</th>
+                            <th style={thStyle}>Capacidad Total</th>
+                            <th style={thStyle}>Precio</th>
+                            <th style={thStyle}>Acciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div style={{ marginTop: "20px", display: "flex", justifyContent: "space-between" }}>
-                <button onClick={handlePrevPage} style={buttonStyle} disabled={page === 0}>Anterior</button>
-                <button onClick={handleNextPage} style={buttonStyle} disabled={(page + 1) * itemsPerPage >= allFlights.length}>Siguiente</button>
+                    </thead>
+                    <tbody>
+                        {currentPageFlights.map(flight => (
+                            <tr key={flight.id}>
+                                <td style={tdStyle}>{flight.flight_origin}</td>
+                                <td style={tdStyle}>{flight.flight_destination}</td>
+                                <td style={tdStyle}>{flight.flight_date}</td>
+                                <td style={tdStyle}>{flight.flight_availability}</td>
+                                <td style={tdStyle}>{flight.flight_seats?.length || 0}</td>
+                                <td style={tdStyle}>{flight.flight_price}</td>
+                                <td style={tdStyle}>
+                                    <button
+                                        style={buttonStyle}
+                                        onClick={() => handleOpenModal(flight, "modificar")}
+                                    >
+                                        Modificar
+                                    </button>
+                                    <button
+                                        style={{ ...buttonStyle, ...buttonHoverStyle }}
+                                        onClick={() => handleOpenModal(flight, "eliminar")}
+                                    >
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <div style={{ marginTop: "20px", display: "flex", justifyContent: "space-between" }}>
+                    <button onClick={handlePrevPage} style={buttonStyle} disabled={page === 0}>Anterior</button>
+                    <button onClick={handleNextPage} style={buttonStyle} disabled={(page + 1) * itemsPerPage >= allFlights.length}>Siguiente</button>
+                </div>
+                {loading && <p>Cargando...</p>}
+                <Modal
+                    open={open}
+                    onClose={handleCloseModal}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={modalBoxStyle}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            {modalAction === "modificar" ? "Modificar Vuelo" : "Eliminar Vuelo"}
+                        </Typography>
+                        {modalAction === "modificar" ? (
+                            <div>
+                                <TextField
+                                    label="Origen"
+                                    name="origin"
+                                    value={updatedFlight.origin}
+                                    onChange={handleUpdateInputChange}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <TextField
+                                    label="Destino"
+                                    name="destination"
+                                    value={updatedFlight.destination}
+                                    onChange={handleUpdateInputChange}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <TextField
+                                    label="Fecha"
+                                    name="date"
+                                    type="date"
+                                    value={updatedFlight.date}
+                                    onChange={handleUpdateInputChange}
+                                    fullWidth
+                                    margin="normal"
+                                    InputLabelProps={{ shrink: true }}
+                                />
+                                <TextField
+                                    label="Disponibilidad"
+                                    name="availability"
+                                    type="number"
+                                    value={updatedFlight.availability}
+                                    onChange={handleUpdateInputChange}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <TextField
+                                    label="Precio"
+                                    name="price"
+                                    type="number"
+                                    value={updatedFlight.price}
+                                    onChange={handleUpdateInputChange}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <Button onClick={() => handleUpdateFlight(selectedFlight.id, updatedFlight)}>Modificar</Button>
+                            </div>
+                        ) : (
+                            <div>
+                                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                    ¿Está seguro que desea eliminar este vuelo?
+                                </Typography>
+                                <Button onClick={() => handleDeleteFlight(selectedFlight.id)}>Eliminar</Button>
+                            </div>
+                        )}
+                        <Button onClick={handleCloseModal}>Cerrar</Button>
+                    </Box>
+                </Modal>
             </div>
-            {loading && <p>Cargando...</p>}
-            <Modal
-                open={open}
-                onClose={handleCloseModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={modalBoxStyle}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        {modalAction === "modificar" ? "Modificar Vuelo" : "Eliminar Vuelo"}
-                    </Typography>
-                    {modalAction === "modificar" ? (
-                        <div>
-                            <TextField
-                                label="Origen"
-                                name="origin"
-                                value={updatedFlight.origin}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Destino"
-                                name="destination"
-                                value={updatedFlight.destination}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Fecha"
-                                name="date"
-                                type="date"
-                                value={updatedFlight.date}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{ shrink: true }}
-                            />
-                            <TextField
-                                label="Disponibilidad"
-                                name="availability"
-                                type="number"
-                                value={updatedFlight.availability}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Precio"
-                                name="price"
-                                type="number"
-                                value={updatedFlight.price}
-                                onChange={handleUpdateInputChange}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <Button onClick={() => handleUpdateFlight(selectedFlight.id, updatedFlight)}>Modificar</Button>
-                        </div>
-                    ) : (
-                        <div>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                ¿Está seguro que desea eliminar este vuelo?
-                            </Typography>
-                            <Button onClick={() => handleDeleteFlight(selectedFlight.id)}>Eliminar</Button>
-                        </div>
-                    )}
-                    <Button onClick={handleCloseModal}>Cerrar</Button>
-                </Box>
-            </Modal>
-        </div>
+        </div>    
     );
 }
 

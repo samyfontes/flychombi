@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(''); // Nuevo estado para el mensaje de error
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -14,12 +15,16 @@ const Login = () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
+            // Clear error message
+            setError('');
             // Redirect or handle success as needed
             console.log("User logged in:", user.uid);
             navigate('/'); // Example: Redirect to home page after successful login
         } catch (error) {
             console.error("Error signing in:", error.message);
-            // Handle error (show message, etc.)
+            setError("Error al iniciar sesión: Los datos ingresados no son correctos."); // Establecer mensaje de error personalizado
+            setEmail(''); // Limpiar campo de correo electrónico
+            setPassword(''); // Limpiar campo de contraseña
         }
     };
 
@@ -39,15 +44,20 @@ const Login = () => {
         width: '100%',
     };
 
+    const errorMessageStyle = {
+        color: 'red',
+        marginTop: '10px',
+    };
+
     return (
         <section className="sectionLogin">
             <div className="divFormulario" style={divFormulario}>
-                <h1 className="loginTitle">Iniciar Sesion</h1>
+                <h1 className="loginTitle">Iniciar Sesión</h1>
                 <form className="formRegistro" style={formRegistro} onSubmit={handleSubmit}>
                     <input
                         className="inputRegistro"
                         type="email"
-                        placeholder="Correo Electronico"
+                        placeholder="Correo Electrónico"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -58,8 +68,9 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button className="botonRegistrar" type="submit">Iniciar Sesion</button>
+                    <button className="botonRegistrar" type="submit">Iniciar Sesión</button>
                 </form>
+                {error && <p style={errorMessageStyle}>{error}</p>} {/* Mostrar mensaje de error */}
                 <Link className="linkRegistro" to="/registro">Crear Cuenta</Link>
             </div>
         </section>

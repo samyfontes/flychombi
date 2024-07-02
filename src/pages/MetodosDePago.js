@@ -89,6 +89,8 @@ const MetodosDePago = () => {
     };
 
     const botonMPStyle = {
+        display: 'flex',
+        alignItems: 'center',
         backgroundColor: 'white',
         cursor: 'pointer',
         borderRadius: '50px',
@@ -202,18 +204,10 @@ const MetodosDePago = () => {
                             onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
                             onClick={() => window.location.href = 'https://www.mercadopago.com'}
                         >
-                            Continuar hacia Mercado PAGO
+                            <img src="/img/mercadoPagoLogo.png" alt="Mercado Pago" style={{ height: '30px', marginRight: '10px' }} />
+                            
                         </button>
                     </div>
-                    {/* <div style={datosDelUsuarioStyle}>  
-                        <button
-                            style={botonContinuarStyle}
-                            onMouseOver={(e) => e.currentTarget.style.transform = botonHoverStyle.transform}
-                            onMouseOut={(e) => e.currentTarget.style.transform = 'none'}
-                        >
-                            <b>Continuar</b>
-                        </button>
-                </div> */}
                 </div>
                 <div style={textoDerechaStyle}>
                     <div style={{ height: '100%', backgroundColor: 'white', borderRadius: '20px', padding: '2.5%', fontSize: 'medium' }}>
@@ -257,7 +251,7 @@ const MetodosDePago = () => {
                             </button>
                         </div>
                     </div>
-                </div>    
+                </div>
             </section>
         </div>
     );

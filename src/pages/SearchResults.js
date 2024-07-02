@@ -33,7 +33,6 @@ const SearchResults = () => {
     }, [selectedReturnFlight]);
 
     const fetchFlightData = async () => {
-        // Aquí leemos los datos del archivo dataset.json y los asignamos a flights
         if (dataset && Array.isArray(dataset.flights)) {
             const flightData = dataset.flights;
             setFlights(flightData);
@@ -43,14 +42,21 @@ const SearchResults = () => {
         }
     };
 
+    const getCurrentDateTime = () => {
+        return new Date().toISOString();
+    };
+
     const filterFlights = () => {
         console.log('Filtering flights with:', { departureMonthYear, arrivalMonthYear });
+
+        const currentDateTime = getCurrentDateTime();
 
         const filteredOutboundFlights = flights.filter(f =>
             f.flight_origin === selectedOrigin &&
             f.flight_destination === selectedDestination &&
             f.flight_availability >= passengerCount &&
-            (!departureMonthYear || (f.flight_date && f.flight_date.startsWith(departureMonthYear)))
+            (!departureMonthYear || (f.flight_date && f.flight_date.startsWith(departureMonthYear))) &&
+            new Date(f.flight_date) > new Date(currentDateTime)
         );
 
         setOutboundFlights(filteredOutboundFlights);
@@ -62,8 +68,9 @@ const SearchResults = () => {
                 f.flight_destination === selectedOrigin &&
                 f.flight_availability >= passengerCount &&
                 (!arrivalMonthYear || (f.flight_date && f.flight_date.startsWith(arrivalMonthYear))) &&
-                new Date(f.flight_date) > new Date(selectedOutboundFlight.flight_date) // Solo mostrar vuelos con fecha posterior al vuelo de ida
-            ).sort((a, b) => new Date(a.flight_date) - new Date(b.flight_date)); // Ordenar por fecha
+                new Date(f.flight_date) > new Date(selectedOutboundFlight.flight_date) &&
+                new Date(f.flight_date) > new Date(currentDateTime)
+            ).sort((a, b) => new Date(a.flight_date) - new Date(b.flight_date));
 
             setReturnFlights(filteredReturnFlights);
             console.log('Filtered return flights:', filteredReturnFlights);
@@ -85,8 +92,9 @@ const SearchResults = () => {
                 f.flight_destination === selectedOrigin &&
                 f.flight_availability >= passengerCount &&
                 (!arrivalMonthYear || (f.flight_date && f.flight_date.startsWith(arrivalMonthYear))) &&
-                new Date(f.flight_date) > new Date(flight.flight_date) // Solo mostrar vuelos con fecha posterior al vuelo de ida
-            ).sort((a, b) => new Date(a.flight_date) - new Date(b.flight_date)); // Ordenar por fecha
+                new Date(f.flight_date) > new Date(flight.flight_date) &&
+                new Date(f.flight_date) > new Date(getCurrentDateTime())
+            ).sort((a, b) => new Date(a.flight_date) - new Date(b.flight_date));
 
             setReturnFlights(filteredReturnFlights);
 
@@ -123,7 +131,6 @@ const SearchResults = () => {
     };
 
     useEffect(() => {
-        // Automatically redirect when both flights are selected
         if (selectedOutboundFlight && (tripType === 'one-way' || (tripType === 'round-trip' && selectedReturnFlight))) {
             navigate('/informacion-pasajeros', {
                 state: {

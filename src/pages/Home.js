@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../firebase';
-import { collection, query, getDocs } from 'firebase/firestore';
-import { set } from 'firebase/database';
 import dataset from '../dataset.json';
 
 const Home = () => {
@@ -16,7 +13,6 @@ const Home = () => {
     const [flightData, setFlightData] = useState([]);
     const navigate = useNavigate();
     const carouselRef = useRef(null);
-
 
     useEffect(() => {
         fetchFlightData();
@@ -33,51 +29,32 @@ const Home = () => {
     }, []);
 
     const fetchFlightData = async () => {
-        //here we read the file dataset.json and we get the data from the array flights
-        setFlightData(dataset);
+        // Aquí leemos los datos del archivo dataset.json y los asignamos a flightData
+        if (dataset && Array.isArray(dataset.flights)) {
+            const flightData = dataset.flights;
 
-        console.log('flights:', flightData);
+            // Actualizamos el estado con los datos de los vuelos
+            setFlightData(flightData);
 
-        const originSet = new Set();
-        const destinationSet = new Set();
-        flightData.forEach(flight => {
-            originSet.add(flight.flight_origin);
-            destinationSet.add(flight.flight_destination);
-        });
-        setOrigins([...originSet]);
-        setDestinations([...destinationSet]);
+            // Usamos un Set para obtener los orígenes y destinos únicos
+            const originSet = new Set();
+            const destinationSet = new Set();
+            flightData.forEach(flight => {
+                originSet.add(flight.flight_origin);
+                destinationSet.add(flight.flight_destination);
+            });
 
-        console.log('flights:', flightData);
-        console.log('origins:', origins);
-        console.log('destinations:', destinations);
-
-        // console.log('flightData:', flightData);
-        // console.log('origins:', origins);
-        // console.log('destinations:', destinations);
-
-        // try {
-        //     const q = query(collection(db, "flights"));
-        //     const querySnapshot = await getDocs(q);
-        //     const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-        //     const originSet = new Set();
-        //     const destinationSet = new Set();
-
-        //     flightData.forEach(flight => {
-        //         originSet.add(flight.flight_origin);
-        //         destinationSet.add(flight.flight_destination);
-        //     });
-
-        //     setOrigins([...originSet]);
-        //     setDestinations([...destinationSet]);
-        // } catch (error) {
-        //     console.error('Error fetching flights:', error);
-        // }
-    }
+            // Actualizamos los estados de origins y destinations
+            setOrigins([...originSet]);
+            setDestinations([...destinationSet]);
+        } else {
+            console.error('Error: el dataset no contiene un array de vuelos válido.');
+        }
+    };
 
     const disableScroll = (event) => {
         event.preventDefault();
-    }
+    };
 
     const handleSearch = async () => {
         if (!selectedOrigin || !selectedDestination) {
@@ -86,10 +63,6 @@ const Home = () => {
         }
 
         try {
-            // const q = query(collection(db, "flights"));
-            // const querySnapshot = await getDocs(q);
-            // const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
             const filteredFlights = flightData.filter(flight =>
                 flight.flight_origin === selectedOrigin &&
                 flight.flight_destination === selectedDestination &&
@@ -114,7 +87,7 @@ const Home = () => {
         } catch (error) {
             console.error('Error fetching flights:', error);
         }
-    }
+    };
 
     const startCarousel = () => {
         const interval = setInterval(() => {
@@ -131,11 +104,11 @@ const Home = () => {
         }, 5000); // Adjust the interval duration (5000 milliseconds = 5 seconds)
 
         return () => clearInterval(interval);
-    }
+    };
 
     const stopCarousel = () => {
         clearInterval(startCarousel);
-    }
+    };
 
     return (
         <div style={{ minHeight: '100vh', position: 'relative' }}>
@@ -186,7 +159,7 @@ const Home = () => {
                 {errorMessage && <div className="alert alert-danger mt-3" style={{ fontSize: '14px', padding: '10px', borderRadius: '5px', backgroundColor: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb' }}>{errorMessage}</div>}
             </div>
         </div>
-    )
+    );
 }
 
 export default Home;

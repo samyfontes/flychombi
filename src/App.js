@@ -13,6 +13,7 @@ import AdminUsuarios from './pages/AdminUsuarios';
 import SearchResults from './pages/SearchResults';
 import MetodosDePago from './pages/MetodosDePago';
 import ConfirmacionCompra from './pages/ConfirmacionCompra';
+import ProtectedRoute from './components/ProtectedRoute'; // Importa el componente de ruta protegida
 import './App.css'; 
 
 function App() {
@@ -23,12 +24,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
-          <Route path='/extras' element={<Extras />} />
-          <Route path='/nosotros' element={<Nosotros />} />
-          <Route path='/informacion-pasajeros' element={<InformacionPasajeros />} />
-          <Route path='/admin/vuelos' element={<AdminVuelos />} />
-          <Route path='/admin/usuarios' element={<AdminUsuarios />} />
-          <Route path='/metodos-de-pago' element={<MetodosDePago />}/>
+          <Route path="/extras" element={<Extras />} />
+          <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/informacion-pasajeros" element={<InformacionPasajeros />} />
+          <Route path="/admin/vuelos" element={<ProtectedRoute element={AdminVuelos} />} />
+          <Route path="/admin/usuarios" element={<ProtectedRoute element={AdminUsuarios} />} />
+          <Route path="/metodos-de-pago" element={<MetodosDePago />} />
           <Route path="/results" element={<SearchResults />} />
           <Route path="/confirmacion-compra" element={<ConfirmacionCompra />} />
         </Routes>

@@ -104,6 +104,7 @@ const Layout = ({ children }) => {
         fontSize: '16px',
         padding: '10px 20px',
         margin: '5px',
+        cursor: 'pointer'
     };
 
     return (

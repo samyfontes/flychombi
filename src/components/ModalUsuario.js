@@ -15,6 +15,11 @@ const ModalUsuario = ({ isOpen, onClose, user }) => {
         }
     };
 
+    // Add a check for user
+    const userName = user?.name || 'Usuario';
+    const userEmail = user?.email || 'No disponible';
+    const userPhoneNumber = user?.phoneNumber || 'No disponible';
+
     return (
         <Dialog 
             open={isOpen} 
@@ -30,7 +35,7 @@ const ModalUsuario = ({ isOpen, onClose, user }) => {
         >
             <DialogTitle>
                 <Typography variant="h6" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#333' }}>
-                    Hola, {user.name}
+                    Hola, {userName}
                 </Typography>
             </DialogTitle>
             <DialogContent dividers>
@@ -43,19 +48,19 @@ const ModalUsuario = ({ isOpen, onClose, user }) => {
                             Nombre
                         </Typography>
                         <Typography variant="body2" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#333' }}>
-                            {user.name}
+                            {userName}
                         </Typography>
                         <Typography variant="body2" className="negrita" style={{ fontWeight: 'bold' }}>
                             E-mail
                         </Typography>
                         <Typography variant="body2" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#333' }}>
-                            {user.email}
+                            {userEmail}
                         </Typography>
                         <Typography variant="body2" className="negrita" style={{ fontWeight: 'bold' }}>
                             Teléfono
                         </Typography>
                         <Typography variant="body2" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#333' }}>
-                            {user.phoneNumber}
+                            {userPhoneNumber}
                         </Typography>
                     </div>
                     <div>

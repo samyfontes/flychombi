@@ -5,14 +5,19 @@ import { collection, getDocs, query, updateDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const AdminUsuarios = () => {
+
+    const mainContainer ={
+        minHeight: "90vh"
+    };
     const containerStyle = {
         width: "100%",
         maxWidth: "1200px",
+        
         margin: "0 auto",
         padding: "20px",
         backgroundColor: "#faebd7",
         borderRadius: "15px",
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
     };
 
     const tableStyle = {
@@ -175,73 +180,75 @@ const AdminUsuarios = () => {
     };
 
     return (
-        <div style={containerStyle}>
-            <h1 style={headerStyle}>Administrar Usuarios</h1>
-            <table style={tableStyle}>
-                <thead>
-                    <tr>
-                        <th style={thStyle}>Nombre</th>
-                        <th style={thStyle}>Apellido</th>
-                        <th style={thStyle}>Teléfono</th>
-                        <th style={thStyle}>Email</th>
-                        <th style={thStyle}>Roles</th>
-                        <th style={thStyle}>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentPageUsers.map(user => (
-                        <tr key={user.id}>
-                            <td style={tdStyle}>{user.name}</td>
-                            <td style={tdStyle}>{user.lastname}</td>
-                            <td style={tdStyle}>{user.phoneNumber}</td>
-                            <td style={tdStyle}>{user.email}</td>
-                            <td style={tdStyle}>{user.roles.join(", ")}</td>
-                            <td style={tdStyle}>
-                                <button
-                                    style={buttonStyle}
-                                    onClick={() => handleOpenModal(user, "admin")}
-                                >
-                                    {user.roles.includes("admin") ? "Quitar Admin" : "Hacer Admin"}
-                                </button>
-                                <button
-                                    style={{ ...buttonStyle, ...buttonHoverStyle }}
-                                    onClick={() => handleOpenModal(user, "eliminar")}
-                                >
-                                    Eliminar
-                                </button>
-                            </td>
+        <div style={mainContainer}>
+            <div style={containerStyle}>
+                <h1 style={headerStyle}>Administrar Usuarios</h1>
+                <table style={tableStyle}>
+                    <thead>
+                        <tr>
+                            <th style={thStyle}>Nombre</th>
+                            <th style={thStyle}>Apellido</th>
+                            <th style={thStyle}>Teléfono</th>
+                            <th style={thStyle}>Email</th>
+                            <th style={thStyle}>Roles</th>
+                            <th style={thStyle}>Acciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div style={{ marginTop: "20px", display: "flex", justifyContent: "space-between" }}>
-                <button onClick={handlePrevPage} style={buttonStyle} disabled={page === 0}>Anterior</button>
-                <button onClick={handleNextPage} style={buttonStyle} disabled={(page + 1) * itemsPerPage >= allUsers.length}>Siguiente</button>
+                    </thead>
+                    <tbody>
+                        {currentPageUsers.map(user => (
+                            <tr key={user.id}>
+                                <td style={tdStyle}>{user.name}</td>
+                                <td style={tdStyle}>{user.lastname}</td>
+                                <td style={tdStyle}>{user.phoneNumber}</td>
+                                <td style={tdStyle}>{user.email}</td>
+                                <td style={tdStyle}>{user.roles.join(", ")}</td>
+                                <td style={tdStyle}>
+                                    <button
+                                        style={buttonStyle}
+                                        onClick={() => handleOpenModal(user, "admin")}
+                                    >
+                                        {user.roles.includes("admin") ? "Quitar Admin" : "Hacer Admin"}
+                                    </button>
+                                    <button
+                                        style={{ ...buttonStyle, ...buttonHoverStyle }}
+                                        onClick={() => handleOpenModal(user, "eliminar")}
+                                    >
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <div style={{ marginTop: "20px", display: "flex", justifyContent: "space-between" }}>
+                    <button onClick={handlePrevPage} style={buttonStyle} disabled={page === 0}>Anterior</button>
+                    <button onClick={handleNextPage} style={buttonStyle} disabled={(page + 1) * itemsPerPage >= allUsers.length}>Siguiente</button>
+                </div>
+                {loading && <p>Cargando...</p>}
+                <Modal
+                    open={open}
+                    onClose={handleCloseModal}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={modalBoxStyle}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            {modalAction === "admin" ? (selectedUser?.roles.includes("admin") ? "Quitar Admin" : "Hacer Admin") : "Eliminar Usuario"}
+                        </Typography>
+                        {modalAction === "admin" ? (
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                {selectedUser?.roles.includes("admin") ? "¿Está seguro que desea quitar los permisos de administrador a este usuario?" : "¿Está seguro que desea hacer administrador a este usuario?"}
+                            </Typography>
+                        ) : (
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                ¿Está seguro que desea eliminar este usuario?
+                            </Typography>
+                        )}
+                        <Button onClick={modalAction === "admin" ? (() => handleMakeAdmin(selectedUser.id)) : (() => handleDeleteUser(selectedUser.id))}>Sí</Button>
+                        <Button onClick={handleCloseModal}>No</Button>
+                    </Box>
+                </Modal>
             </div>
-            {loading && <p>Cargando...</p>}
-            <Modal
-                open={open}
-                onClose={handleCloseModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={modalBoxStyle}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        {modalAction === "admin" ? (selectedUser?.roles.includes("admin") ? "Quitar Admin" : "Hacer Admin") : "Eliminar Usuario"}
-                    </Typography>
-                    {modalAction === "admin" ? (
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            {selectedUser?.roles.includes("admin") ? "¿Está seguro que desea quitar los permisos de administrador a este usuario?" : "¿Está seguro que desea hacer administrador a este usuario?"}
-                        </Typography>
-                    ) : (
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            ¿Está seguro que desea eliminar este usuario?
-                        </Typography>
-                    )}
-                    <Button onClick={modalAction === "admin" ? (() => handleMakeAdmin(selectedUser.id)) : (() => handleDeleteUser(selectedUser.id))}>Sí</Button>
-                    <Button onClick={handleCloseModal}>No</Button>
-                </Box>
-            </Modal>
         </div>
     );
 }

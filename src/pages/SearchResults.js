@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { db } from '../firebase';
-import { collection, query, getDocs } from 'firebase/firestore';
+import dataset from '../dataset.json';
 import FlightCard from '../components/FlightCard';
 
 const SearchResults = () => {
@@ -25,7 +24,7 @@ const SearchResults = () => {
 
     useEffect(() => {
         filterFlights();
-    }, [departureMonthYear, arrivalMonthYear, flights]);
+    }, [departureMonthYear, arrivalMonthYear, flights, selectedOutboundFlight]);
 
     useEffect(() => {
         if (selectedReturnFlight && buttonRef.current) {
@@ -34,26 +33,30 @@ const SearchResults = () => {
     }, [selectedReturnFlight]);
 
     const fetchFlightData = async () => {
-        try {
-            const q = query(collection(db, "flights"));
-            const querySnapshot = await getDocs(q);
-            const flightData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
+        if (dataset && Array.isArray(dataset.flights)) {
+            const flightData = dataset.flights;
             setFlights(flightData);
             console.log('Fetched flight data:', flightData);
-        } catch (error) {
-            console.error('Error fetching flights:', error);
+        } else {
+            console.error('Error: el dataset no contiene un array de vuelos válido.');
         }
-    }
+    };
+
+    const getCurrentDateTime = () => {
+        return new Date().toISOString();
+    };
 
     const filterFlights = () => {
         console.log('Filtering flights with:', { departureMonthYear, arrivalMonthYear });
+
+        const currentDateTime = getCurrentDateTime();
 
         const filteredOutboundFlights = flights.filter(f =>
             f.flight_origin === selectedOrigin &&
             f.flight_destination === selectedDestination &&
             f.flight_availability >= passengerCount &&
-            (!departureMonthYear || (f.flight_date && f.flight_date.startsWith(departureMonthYear)))
+            (!departureMonthYear || (f.flight_date && f.flight_date.startsWith(departureMonthYear))) &&
+            new Date(f.flight_date) > new Date(currentDateTime)
         );
 
         setOutboundFlights(filteredOutboundFlights);
@@ -64,8 +67,10 @@ const SearchResults = () => {
                 f.flight_origin === selectedDestination &&
                 f.flight_destination === selectedOrigin &&
                 f.flight_availability >= passengerCount &&
-                (!arrivalMonthYear || (f.flight_date && f.flight_date.startsWith(arrivalMonthYear)))
-            );
+                (!arrivalMonthYear || (f.flight_date && f.flight_date.startsWith(arrivalMonthYear))) &&
+                new Date(f.flight_date) > new Date(selectedOutboundFlight.flight_date) &&
+                new Date(f.flight_date) > new Date(currentDateTime)
+            ).sort((a, b) => new Date(a.flight_date) - new Date(b.flight_date));
 
             setReturnFlights(filteredReturnFlights);
             console.log('Filtered return flights:', filteredReturnFlights);
@@ -86,8 +91,10 @@ const SearchResults = () => {
                 f.flight_origin === selectedDestination &&
                 f.flight_destination === selectedOrigin &&
                 f.flight_availability >= passengerCount &&
-                (!arrivalMonthYear || (f.departure_date && f.departure_date.startsWith(arrivalMonthYear)))
-            );
+                (!arrivalMonthYear || (f.flight_date && f.flight_date.startsWith(arrivalMonthYear))) &&
+                new Date(f.flight_date) > new Date(flight.flight_date) &&
+                new Date(f.flight_date) > new Date(getCurrentDateTime())
+            ).sort((a, b) => new Date(a.flight_date) - new Date(b.flight_date));
 
             setReturnFlights(filteredReturnFlights);
 
@@ -124,7 +131,6 @@ const SearchResults = () => {
     };
 
     useEffect(() => {
-        // Automatically redirect when both flights are selected
         if (selectedOutboundFlight && (tripType === 'one-way' || (tripType === 'round-trip' && selectedReturnFlight))) {
             navigate('/informacion-pasajeros', {
                 state: {
@@ -139,7 +145,7 @@ const SearchResults = () => {
     }, [selectedOutboundFlight, selectedReturnFlight]);
 
     return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '180px', minHeight: '100vh'}}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '180px', minHeight: '100vh' }}>
             <div>
                 <h4>Fecha de salida (Mes/Año)</h4>
                 <input type="month" value={departureMonthYear} onChange={e => setDepartureMonthYear(e.target.value)} />
@@ -182,12 +188,7 @@ const SearchResults = () => {
 
             <div style={{ gridColumn: '1 / -1', textAlign: 'center', }}>
                 {(selectedOutboundFlight && (tripType === 'one-way' || (tripType === 'round-trip' && selectedReturnFlight))) && (
-                    <button style={{backgroundColor: '#ffa800',
-                        width: '60%',
-                        height: '40px',
-                        borderRadius: '50px',
-                        fontSize: 'medium',
-                        cursor: 'pointer'}} ref={buttonRef} onClick={handleConfirmSelection}>Confirmar selección de vuelos</button>
+                    <button style={{ backgroundColor: '#ffa800', width: '60%', height: '40px', borderRadius: '50px', fontSize: 'medium', cursor: 'pointer' }} ref={buttonRef} onClick={handleConfirmSelection}>Confirmar selección de vuelos</button>
                 )}
             </div>
 

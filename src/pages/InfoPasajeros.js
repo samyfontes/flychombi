@@ -40,6 +40,12 @@ const InformacionPasajeros = () => {
 
     const handleValidation = () => {
         const { name, birthDate, document, gender } = passengerData;
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const birthYear = new Date(birthDate).getFullYear();
+        const birthDateObject = new Date(birthDate);
+        const documentLength = document.toString().length;
+
         if (!name) {
             alert('Por favor, complete el nombre del pasajero.');
             return false;
@@ -48,8 +54,20 @@ const InformacionPasajeros = () => {
             alert('Por favor, complete la fecha de nacimiento.');
             return false;
         }
+        if (birthYear < 1900 || birthYear > currentYear) {
+            alert('Por favor, ingrese un año de nacimiento válido (mayor a 1900 y menor o igual al año actual).');
+            return false;
+        }
+        if (birthDateObject > currentDate) {
+            alert('La fecha de nacimiento no puede ser posterior a la fecha actual.');
+            return false;
+        }
         if (!document) {
             alert('Por favor, complete el documento.');
+            return false;
+        }
+        if (documentLength < 7 || documentLength > 9) {
+            alert('Por favor, ingrese un documento válido (entre 7 y 9 dígitos).');
             return false;
         }
         if (!gender) {
@@ -74,14 +92,6 @@ const InformacionPasajeros = () => {
     };
 
     const handleContinue = () => {
-        // console.log('Datos enviados:', {
-        //     selectedOutboundFlight,
-        //     selectedReturnFlight,
-        //     selectedOrigin,
-        //     selectedDestination,
-        //     passengerCount,
-        //     passengers
-        // });
         navigate('/extras', {
             state: {
                 selectedOutboundFlight,
@@ -94,12 +104,15 @@ const InformacionPasajeros = () => {
         });
     };
 
+    // Get the current date in YYYY-MM-DD format for the max attribute of the date input
+    const today = new Date().toISOString().split('T')[0];
+
     return (
         <div className="div-info-pasajeros">
             <section>
                 <div className="seccion-titulo-pasajeros">
                     <h1 className="titulo-pasajeros">
-                        Informacion de los pasajeros
+                        Información de los pasajeros
                     </h1>
                 </div>
             </section>
@@ -124,6 +137,7 @@ const InformacionPasajeros = () => {
                             required
                             value={passengerData.birthDate}
                             onChange={handleInputChange}
+                            max={today} // Ensure the date cannot be set in the future
                         />
                         <input
                             type="number"
@@ -193,7 +207,7 @@ const InformacionPasajeros = () => {
                                 <div className="modal-content">
                                     <div className="modal-header">
                                         <h5 className="modal-title" id="staticBackdropLabel">
-                                            Tenga en cuenta la siguiente informacion de su vuelo
+                                            Tenga en cuenta la siguiente información de su vuelo
                                         </h5>
                                         <button
                                             type="button"
